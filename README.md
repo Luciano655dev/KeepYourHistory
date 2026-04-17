@@ -1,36 +1,69 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Keep Your History
 
-## Getting Started
+Keep Your History helps organizations preserve personal life stories in printed books.  
+This site presents the project and includes a request form for institutions to contact the team.
 
-First, run the development server:
+## What This Website Includes
+
+- A public landing page explaining the project
+- A request form for institutions
+- Server-side email delivery for form submissions
+
+## Running Locally
+
+1. Install dependencies:
+
+```bash
+npm install
+```
+
+2. Create your environment file:
+
+```bash
+cp .env.example .env.local
+```
+
+3. Fill `.env.local` with valid email credentials (see next section).
+
+4. Start development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+5. Open:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+`http://localhost:3000`
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Environment Variables
 
-## Learn More
+Use the following values in `.env.local`:
 
-To learn more about Next.js, take a look at the following resources:
+- `REQUEST_TO_EMAIL`: inbox that receives form submissions
+- `SMTP_HOST`: SMTP host (example: `smtp.gmail.com`)
+- `SMTP_PORT`: SMTP port (example: `465`)
+- `SMTP_SECURE`: `true` for SSL/TLS on port 465
+- `SMTP_USER`: sender email account
+- `SMTP_PASS`: SMTP password (for Gmail, use an App Password)
+- `SMTP_FROM`: sender label shown in email (example: `KeepYourHistory <you@gmail.com>`)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Form Submission
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+When a user submits the request form:
 
-## Deploy on Vercel
+1. The site sends a `POST` request to `/api/request-book`
+2. The server validates the payload
+3. The server sends an email to `REQUEST_TO_EMAIL`
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Deploy
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Deploy to Vercel using the repository root as the project root.
+
+- Build command: `next build` (default)
+- Output directory: leave empty for this project (do not use `dist`)
+- Add all environment variables from `.env.local` to Vercel Project Settings
+
+## License
+
+This project is licensed under the MIT License.  
+See [LICENSE](./LICENSE).
