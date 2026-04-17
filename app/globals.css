@@ -1,16 +1,16 @@
 @import "tailwindcss";
 
 :root {
-  --background: #fffaf4;
-  --foreground: #6e5945;
-  --color-soft-foreground: #806853;
-  --color-surface: rgba(255, 251, 246, 0.86);
-  --color-surface-strong: #f2e3cf;
-  --color-accent-soft: #ebd7bc;
-  --color-accent: #a98560;
-  --color-muted: #9d846c;
-  --color-border: rgba(176, 149, 121, 0.16);
-  --color-border-strong: rgba(176, 149, 121, 0.34);
+  --background: #f2f6f8;
+  --foreground: #223441;
+  --color-soft-foreground: #2d4759;
+  --color-surface: rgba(247, 251, 253, 0.88);
+  --color-surface-strong: #dfe9ef;
+  --color-accent-soft: #d6e4ec;
+  --color-accent: #42677f;
+  --color-muted: #667d8d;
+  --color-border: rgba(84, 112, 130, 0.18);
+  --color-border-strong: rgba(74, 102, 121, 0.34);
 }
 
 @theme inline {
@@ -32,9 +32,9 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-public-sans), sans-serif;
+  font-weight: 450;
+  letter-spacing: 0.004em;
   min-height: 100vh;
-  user-select: none;
-  -webkit-user-select: none;
 }
 
 input,
@@ -49,19 +49,19 @@ a {
 }
 
 ::selection {
-  background: rgba(180, 143, 102, 0.24);
+  background: rgba(90, 127, 151, 0.24);
   color: var(--foreground);
 }
 
 .liquid-glass-text {
   position: relative;
-  color: rgba(172, 136, 98, 0.96);
+  color: rgba(67, 103, 127, 0.96);
   background:
     linear-gradient(
       180deg,
-      rgba(196, 163, 126, 0.98) 0%,
-      rgba(177, 142, 107, 0.94) 36%,
-      rgba(150, 117, 85, 0.98) 100%
+      rgba(116, 148, 167, 0.98) 0%,
+      rgba(86, 121, 143, 0.94) 36%,
+      rgba(62, 95, 116, 0.98) 100%
     );
   -webkit-background-clip: text;
   background-clip: text;
@@ -109,17 +109,17 @@ a {
 
 .request-label {
   font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: 0.16em;
+  font-weight: 650;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--color-accent);
 }
 
 .request-control {
   min-height: 2.75rem;
-  border: 1px solid rgba(176, 149, 121, 0.36);
+  border: 1px solid rgba(90, 120, 139, 0.34);
   border-radius: 0.58rem;
-  background: rgba(255, 252, 248, 0.96);
+  background: rgba(250, 253, 255, 0.94);
   padding: 0.65rem 0.75rem;
   font-size: 0.95rem;
   color: var(--color-foreground);
@@ -129,8 +129,8 @@ a {
     box-shadow 160ms ease,
     transform 160ms ease;
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.88),
-    0 8px 16px -14px rgba(122, 91, 57, 0.46);
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 10px 18px -16px rgba(39, 63, 79, 0.45);
 }
 
 .request-control::placeholder {
@@ -138,10 +138,10 @@ a {
 }
 
 .request-control:focus {
-  border-color: rgba(169, 133, 97, 0.82);
+  border-color: rgba(66, 103, 127, 0.78);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.88),
-    0 0 0 2px rgba(169, 133, 97, 0.18);
+    0 0 0 2px rgba(66, 103, 127, 0.2);
   transform: translateY(-0.5px);
 }
 
@@ -161,8 +161,8 @@ a {
   width: 0.8rem;
   height: 1rem;
   border-radius: 0.12rem;
-  background: #f3e1c8;
-  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.22);
+  background: #d8e5ee;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.25);
   transform-origin: center;
   animation-name: paper-fall;
   animation-timing-function: linear;

@@ -155,15 +155,15 @@ export default function Home() {
 
   return (
     <main className="relative flex-1 overflow-hidden">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(216,194,165,0.34),transparent_40%),radial-gradient(circle_at_50%_72%,rgba(225,205,178,0.32),transparent_36%),linear-gradient(180deg,#fffaf4_0%,#fdf7f0_42%,#f8efe4_100%)]" />
-      <div className="absolute inset-x-0 top-0 h-48 bg-[linear-gradient(180deg,rgba(255,250,244,0.94),rgba(255,250,244,0))]" />
-      <div className="absolute inset-x-0 bottom-0 h-56 bg-[linear-gradient(180deg,rgba(248,239,228,0),rgba(239,224,204,0.42))]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(145,174,192,0.32),transparent_42%),radial-gradient(circle_at_50%_72%,rgba(169,194,208,0.3),transparent_38%),linear-gradient(180deg,#f4f8fa_0%,#edf4f7_42%,#e6eff3_100%)]" />
+      <div className="absolute inset-x-0 top-0 h-48 bg-[linear-gradient(180deg,rgba(247,251,253,0.94),rgba(247,251,253,0))]" />
+      <div className="absolute inset-x-0 bottom-0 h-56 bg-[linear-gradient(180deg,rgba(230,239,244,0),rgba(216,229,237,0.48))]" />
       <div className="pointer-events-none absolute inset-0 z-0">
         <FallingPapers />
       </div>
 
       <header
-        className={`fixed inset-x-0 top-0 z-50 w-full border-b border-[color:var(--color-border)] bg-[color:var(--color-surface)]/90 shadow-[0_18px_50px_-38px_rgba(122,91,57,0.34)] backdrop-blur transition-all duration-300 ${
+        className={`fixed inset-x-0 top-0 z-50 w-full border-b border-[color:var(--color-border)] bg-[color:var(--color-surface)]/90 shadow-[0_18px_50px_-38px_rgba(46,70,84,0.32)] backdrop-blur transition-all duration-300 ${
           showHeader
             ? "translate-y-0 opacity-100"
             : "pointer-events-none -translate-y-full opacity-0"
@@ -176,7 +176,7 @@ export default function Home() {
             </span>
           </a>
 
-          <nav className="hidden items-center gap-8 text-sm text-[color:var(--color-muted)] md:flex">
+          <nav className="hidden items-center gap-8 text-[0.78rem] font-medium uppercase tracking-[0.08em] text-[color:var(--color-muted)] md:flex">
             <a
               className="transition-colors duration-200 hover:text-[color:var(--color-soft-foreground)]"
               href="#how-it-works"
@@ -199,7 +199,7 @@ export default function Home() {
 
           <a
             href="#order"
-            className="inline-flex items-center justify-center rounded-full border border-[color:var(--color-border-strong)] bg-[color:var(--color-accent-soft)] px-4 py-2 text-[0.78rem] font-semibold text-[color:var(--color-foreground)] shadow-[0_10px_24px_-18px_rgba(122,91,57,0.42)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-[rgba(233,214,188,0.95)] sm:px-5 sm:py-2.5"
+            className="inline-flex items-center justify-center rounded-full border border-[color:var(--color-border-strong)] bg-[color:var(--color-accent-soft)] px-4 py-2 text-[0.73rem] font-semibold uppercase tracking-[0.12em] text-[color:var(--color-foreground)] shadow-[0_10px_24px_-18px_rgba(43,67,83,0.42)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-[rgba(214,228,236,0.96)] sm:px-5 sm:py-2.5"
           >
             Order
           </a>
@@ -210,18 +210,18 @@ export default function Home() {
         data-animate
         className="reveal reveal-up relative mx-auto grid min-h-[100svh] w-full max-w-7xl grid-cols-1 items-center gap-10 px-4 py-20 text-center sm:gap-12 sm:px-8 sm:py-24 lg:grid-cols-12 lg:gap-8 lg:px-12 lg:py-28 lg:text-left"
       >
-        <div className="pointer-events-none absolute left-1/2 top-[10%] z-[2] h-32 w-[min(34rem,92vw)] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(255,249,241,0.92),rgba(255,249,241,0.58)_42%,transparent_74%)] blur-2xl sm:h-40 sm:w-[min(48rem,88vw)] lg:top-[15%] lg:h-44 lg:w-[min(58rem,88vw)]" />
-        <div className="pointer-events-none absolute left-1/2 top-[56%] z-[2] h-52 w-[min(38rem,94vw)] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(255,250,244,0.84),rgba(255,250,244,0.32)_44%,transparent_72%)] blur-3xl sm:h-72 sm:w-[min(58rem,92vw)] lg:top-[54%] lg:h-80 lg:w-[min(70rem,96vw)]" />
+        <div className="pointer-events-none absolute left-1/2 top-[10%] z-[2] h-32 w-[min(34rem,92vw)] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(246,251,253,0.92),rgba(246,251,253,0.5)_44%,transparent_74%)] blur-2xl sm:h-40 sm:w-[min(48rem,88vw)] lg:top-[15%] lg:h-44 lg:w-[min(58rem,88vw)]" />
+        <div className="pointer-events-none absolute left-1/2 top-[56%] z-[2] h-52 w-[min(38rem,94vw)] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(241,248,251,0.84),rgba(241,248,251,0.28)_46%,transparent_72%)] blur-3xl sm:h-72 sm:w-[min(58rem,92vw)] lg:top-[54%] lg:h-80 lg:w-[min(70rem,96vw)]" />
 
         <div
           data-animate
           className="reveal reveal-left relative z-10 mx-auto flex w-full max-w-[38rem] flex-col items-center justify-center lg:col-span-5 lg:mx-0 lg:max-w-none lg:items-start"
         >
-          <h1 className="mx-auto w-fit text-center font-[family:var(--font-cormorant-garamond)] text-[2.9rem] leading-[0.94] text-[color:var(--color-soft-foreground)] sm:text-[4.2rem] lg:mx-0 lg:text-left lg:text-[4.9rem] xl:text-[5.7rem]">
-            <span className="block font-[700] tracking-[0.02em] text-[color:var(--color-accent)]">
+          <h1 className="mx-auto w-fit text-center font-display text-[2.85rem] leading-[0.98] tracking-[0.01em] text-[color:var(--color-soft-foreground)] sm:text-[4rem] lg:mx-0 lg:text-left lg:text-[4.75rem] xl:text-[5.5rem]">
+            <span className="block font-semibold tracking-[0.015em] text-[color:var(--color-accent)]">
               Keep your history
             </span>
-            <span className="mt-1 block font-[600]">
+            <span className="mt-1 block font-medium">
               alive
             </span>
           </h1>
@@ -242,13 +242,13 @@ export default function Home() {
           <div className="relative z-10 mt-8 flex w-full max-w-[32rem] flex-col items-stretch gap-3 sm:mt-10 sm:flex-row sm:items-center lg:w-auto lg:max-w-none lg:items-start">
             <a
               href="#about-us"
-              className="inline-flex min-w-[11rem] items-center justify-center rounded-full border border-[rgba(155,122,88,0.26)] bg-[rgba(235,213,184,0.9)] px-6 py-3.5 text-[0.78rem] font-semibold uppercase tracking-[0.18em] text-[color:var(--color-foreground)] shadow-[0_18px_34px_-26px_rgba(122,91,57,0.5)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-[rgba(235,213,184,1)] hover:shadow-[0_22px_38px_-26px_rgba(122,91,57,0.54)] sm:min-w-[11.5rem] sm:px-7 sm:py-4 sm:text-[0.8rem]"
+              className="inline-flex min-w-[11rem] items-center justify-center rounded-full border border-[rgba(74,102,121,0.28)] bg-[rgba(214,228,236,0.9)] px-6 py-3.5 text-[0.76rem] font-semibold uppercase tracking-[0.14em] text-[color:var(--color-foreground)] shadow-[0_18px_34px_-26px_rgba(45,68,84,0.48)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-[rgba(214,228,236,1)] hover:shadow-[0_22px_38px_-26px_rgba(45,68,84,0.52)] sm:min-w-[11.5rem] sm:px-7 sm:py-4 sm:text-[0.78rem]"
             >
               Discover
             </a>
             <a
               href="#order"
-              className="inline-flex min-w-[11rem] items-center justify-center rounded-full border border-[rgba(176,149,121,0.22)] bg-[rgba(255,251,246,0.84)] px-6 py-3.5 text-[0.78rem] font-semibold uppercase tracking-[0.18em] text-[color:var(--color-foreground)] shadow-[inset_0_1px_0_rgba(255,255,255,0.6),0_16px_30px_-26px_rgba(122,91,57,0.34)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-[rgba(255,251,246,0.94)] sm:min-w-[11.5rem] sm:px-7 sm:py-4 sm:text-[0.8rem]"
+              className="inline-flex min-w-[11rem] items-center justify-center rounded-full border border-[rgba(84,112,130,0.24)] bg-[rgba(247,251,253,0.86)] px-6 py-3.5 text-[0.76rem] font-semibold uppercase tracking-[0.14em] text-[color:var(--color-foreground)] shadow-[inset_0_1px_0_rgba(255,255,255,0.62),0_16px_30px_-26px_rgba(45,68,84,0.34)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-[rgba(247,251,253,0.98)] sm:min-w-[11.5rem] sm:px-7 sm:py-4 sm:text-[0.78rem]"
             >
               Request a Book
             </a>
@@ -261,8 +261,8 @@ export default function Home() {
             data-animate-delay="120"
             className="reveal reveal-right relative z-10 mx-auto flex h-[22rem] w-full max-w-[36rem] items-center justify-center sm:h-[26rem] sm:max-w-[45rem] lg:col-span-7 lg:mx-0 lg:h-[46rem] lg:max-w-none lg:justify-end"
           >
-            <div className="pointer-events-none absolute inset-x-[7%] top-[12%] h-[32%] rounded-full bg-[radial-gradient(circle,rgba(255,251,244,0.9),rgba(255,251,244,0.08)_68%,transparent)] blur-3xl" />
-            <div className="pointer-events-none absolute inset-x-[12%] bottom-[9%] h-[22%] rounded-full bg-[radial-gradient(circle,rgba(224,197,164,0.24),rgba(224,197,164,0)_72%)] blur-2xl" />
+            <div className="pointer-events-none absolute inset-x-[7%] top-[12%] h-[32%] rounded-full bg-[radial-gradient(circle,rgba(247,251,253,0.9),rgba(247,251,253,0.1)_68%,transparent)] blur-3xl" />
+            <div className="pointer-events-none absolute inset-x-[12%] bottom-[9%] h-[22%] rounded-full bg-[radial-gradient(circle,rgba(156,182,198,0.2),rgba(156,182,198,0)_72%)] blur-2xl" />
             <div className="relative mx-auto h-full w-full lg:mx-0 lg:ml-auto lg:w-[154%] lg:translate-x-[8%] xl:w-[166%] xl:translate-x-[12%] 2xl:w-[174%]">
               <OpenBookScene />
             </div>
@@ -275,8 +275,8 @@ export default function Home() {
         data-animate
         className="reveal reveal-up relative scroll-mt-28 grid w-full items-center gap-10 overflow-hidden px-4 pb-18 pt-10 sm:gap-12 sm:px-8 sm:pb-24 sm:pt-12 lg:min-h-[44rem] lg:grid-cols-2 lg:gap-0 lg:px-0 lg:py-24"
       >
-        <div className="pointer-events-none absolute left-1/2 top-[22%] z-[1] h-32 w-[min(34rem,86vw)] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(255,250,244,0.86),rgba(255,250,244,0.18)_62%,transparent)] blur-3xl sm:h-40 sm:w-[min(46rem,82vw)]" />
-        <div className="pointer-events-none absolute left-[26%] top-[54%] z-[1] h-32 w-32 rounded-full bg-[radial-gradient(circle,rgba(225,198,165,0.2),rgba(225,198,165,0)_72%)] blur-3xl" />
+        <div className="pointer-events-none absolute left-1/2 top-[22%] z-[1] h-32 w-[min(34rem,86vw)] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(247,251,253,0.86),rgba(247,251,253,0.2)_62%,transparent)] blur-3xl sm:h-40 sm:w-[min(46rem,82vw)]" />
+        <div className="pointer-events-none absolute left-[26%] top-[54%] z-[1] h-32 w-32 rounded-full bg-[radial-gradient(circle,rgba(158,185,200,0.2),rgba(158,185,200,0)_72%)] blur-3xl" />
 
         <div
           data-animate
@@ -294,7 +294,7 @@ export default function Home() {
           data-animate-delay="80"
           className="reveal reveal-up relative z-20 order-2 mx-auto flex max-w-[39rem] min-w-0 flex-col justify-center text-center lg:col-start-2 lg:mx-0 lg:max-w-none lg:pl-12 lg:pr-12 lg:text-left xl:pl-16 xl:pr-20"
         >
-          <h2 className="font-[family:var(--font-cormorant-garamond)] text-[2.8rem] leading-[0.94] text-[color:var(--color-soft-foreground)] sm:text-[3.7rem] lg:text-[4.7rem]">
+          <h2 className="font-display text-[2.7rem] leading-[0.96] tracking-[0.01em] text-[color:var(--color-soft-foreground)] sm:text-[3.6rem] lg:text-[4.55rem]">
             Every person carries a history worth keeping.
           </h2>
 
@@ -334,16 +334,16 @@ export default function Home() {
         data-animate
         className="reveal reveal-up relative mx-auto w-full max-w-7xl px-4 pb-20 pt-8 sm:px-8 sm:pb-24 lg:px-12 lg:pb-28"
       >
-        <div className="pointer-events-none absolute left-1/2 top-[18%] z-[1] h-40 w-[min(46rem,90vw)] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(255,249,241,0.84),rgba(255,249,241,0.18)_58%,transparent)] blur-3xl" />
+        <div className="pointer-events-none absolute left-1/2 top-[18%] z-[1] h-40 w-[min(46rem,90vw)] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(247,251,253,0.84),rgba(247,251,253,0.2)_58%,transparent)] blur-3xl" />
 
         <div
           data-animate
           className="reveal reveal-up relative z-10 mx-auto max-w-3xl text-center"
         >
-          <p className="text-[0.78rem] font-semibold uppercase tracking-[0.22em] text-[color:var(--color-accent)]">
+          <p className="text-[0.75rem] font-semibold uppercase tracking-[0.18em] text-[color:var(--color-accent)]">
             How It Works
           </p>
-          <h2 className="mt-4 font-[family:var(--font-cormorant-garamond)] text-[2.8rem] leading-[0.94] text-[color:var(--color-soft-foreground)] sm:text-[3.7rem] lg:text-[4.7rem]">
+          <h2 className="mt-4 font-display text-[2.7rem] leading-[0.96] tracking-[0.01em] text-[color:var(--color-soft-foreground)] sm:text-[3.6rem] lg:text-[4.55rem]">
             From lived experience to a book that stays.
           </h2>
           <p className="mt-5 text-[1rem] leading-7 text-[color:var(--color-muted)] sm:text-[1.05rem] sm:leading-8">
@@ -357,9 +357,9 @@ export default function Home() {
           <article
             data-animate
             data-animate-delay="40"
-            className="reveal reveal-up rounded-[2rem] border border-[color:var(--color-border)] bg-[rgba(255,251,246,0.82)] p-6 shadow-[0_24px_50px_-36px_rgba(122,91,57,0.34)] backdrop-blur"
+            className="reveal reveal-up rounded-[2rem] border border-[color:var(--color-border)] bg-[rgba(248,251,253,0.82)] p-6 shadow-[0_24px_50px_-36px_rgba(45,68,84,0.32)] backdrop-blur"
           >
-            <p className="text-[0.76rem] font-semibold uppercase tracking-[0.22em] text-[color:var(--color-accent)]">
+            <p className="text-[0.74rem] font-semibold uppercase tracking-[0.16em] text-[color:var(--color-accent)]">
               Step 1
             </p>
             <h3 className="mt-4 text-[1.3rem] font-semibold text-[color:var(--color-soft-foreground)]">
@@ -375,9 +375,9 @@ export default function Home() {
           <article
             data-animate
             data-animate-delay="120"
-            className="reveal reveal-up rounded-[2rem] border border-[color:var(--color-border)] bg-[rgba(255,251,246,0.82)] p-6 shadow-[0_24px_50px_-36px_rgba(122,91,57,0.34)] backdrop-blur"
+            className="reveal reveal-up rounded-[2rem] border border-[color:var(--color-border)] bg-[rgba(248,251,253,0.82)] p-6 shadow-[0_24px_50px_-36px_rgba(45,68,84,0.32)] backdrop-blur"
           >
-            <p className="text-[0.76rem] font-semibold uppercase tracking-[0.22em] text-[color:var(--color-accent)]">
+            <p className="text-[0.74rem] font-semibold uppercase tracking-[0.16em] text-[color:var(--color-accent)]">
               Step 2
             </p>
             <h3 className="mt-4 text-[1.3rem] font-semibold text-[color:var(--color-soft-foreground)]">
@@ -393,9 +393,9 @@ export default function Home() {
           <article
             data-animate
             data-animate-delay="200"
-            className="reveal reveal-up rounded-[2rem] border border-[color:var(--color-border)] bg-[rgba(255,251,246,0.82)] p-6 shadow-[0_24px_50px_-36px_rgba(122,91,57,0.34)] backdrop-blur"
+            className="reveal reveal-up rounded-[2rem] border border-[color:var(--color-border)] bg-[rgba(248,251,253,0.82)] p-6 shadow-[0_24px_50px_-36px_rgba(45,68,84,0.32)] backdrop-blur"
           >
-            <p className="text-[0.76rem] font-semibold uppercase tracking-[0.22em] text-[color:var(--color-accent)]">
+            <p className="text-[0.74rem] font-semibold uppercase tracking-[0.16em] text-[color:var(--color-accent)]">
               Step 3
             </p>
             <h3 className="mt-4 text-[1.3rem] font-semibold text-[color:var(--color-soft-foreground)]">
@@ -411,9 +411,9 @@ export default function Home() {
           <article
             data-animate
             data-animate-delay="280"
-            className="reveal reveal-up rounded-[2rem] border border-[color:var(--color-border)] bg-[rgba(255,251,246,0.82)] p-6 shadow-[0_24px_50px_-36px_rgba(122,91,57,0.34)] backdrop-blur"
+            className="reveal reveal-up rounded-[2rem] border border-[color:var(--color-border)] bg-[rgba(248,251,253,0.82)] p-6 shadow-[0_24px_50px_-36px_rgba(45,68,84,0.32)] backdrop-blur"
           >
-            <p className="text-[0.76rem] font-semibold uppercase tracking-[0.22em] text-[color:var(--color-accent)]">
+            <p className="text-[0.74rem] font-semibold uppercase tracking-[0.16em] text-[color:var(--color-accent)]">
               Step 4
             </p>
             <h3 className="mt-4 text-[1.3rem] font-semibold text-[color:var(--color-soft-foreground)]">
@@ -460,10 +460,10 @@ export default function Home() {
           </div>
 
           <div data-animate data-animate-delay="80" className="reveal reveal-up">
-            <p className="text-[0.78rem] font-semibold uppercase tracking-[0.22em] text-[color:var(--color-accent)]">
+            <p className="text-[0.75rem] font-semibold uppercase tracking-[0.18em] text-[color:var(--color-accent)]">
               Who We Are
             </p>
-            <h2 className="mt-4 font-[family:var(--font-cormorant-garamond)] text-[2.8rem] leading-[0.94] text-[color:var(--color-soft-foreground)] sm:text-[3.7rem] lg:text-[4.7rem]">
+            <h2 className="mt-4 font-display text-[2.7rem] leading-[0.96] tracking-[0.01em] text-[color:var(--color-soft-foreground)] sm:text-[3.6rem] lg:text-[4.55rem]">
               Two students from Windermere Preparatory School.
             </h2>
 
@@ -503,13 +503,13 @@ export default function Home() {
       >
         <div id="for-places" className="pointer-events-none absolute -top-28" />
         <div id="contact" className="pointer-events-none absolute -top-28" />
-        <div className="pointer-events-none absolute left-1/2 top-[18%] z-[1] h-40 w-[min(44rem,88vw)] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(255,249,241,0.88),rgba(255,249,241,0.18)_62%,transparent)] blur-3xl" />
+        <div className="pointer-events-none absolute left-1/2 top-[18%] z-[1] h-40 w-[min(44rem,88vw)] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(247,251,253,0.88),rgba(247,251,253,0.22)_62%,transparent)] blur-3xl" />
 
         <div
           data-animate
           className="reveal reveal-up relative z-10 mx-auto max-w-3xl"
         >
-          <h2 className="text-center font-[family:var(--font-cormorant-garamond)] text-[2.15rem] leading-[0.95] text-[color:var(--color-soft-foreground)] sm:text-[2.7rem]">
+          <h2 className="text-center font-display text-[2.1rem] leading-[0.98] tracking-[0.01em] text-[color:var(--color-soft-foreground)] sm:text-[2.65rem]">
             Request a Book
           </h2>
           <p className="mx-auto mt-3 max-w-2xl text-center text-[0.96rem] leading-7 text-[color:var(--color-muted)] sm:text-[1rem]">
@@ -522,7 +522,7 @@ export default function Home() {
             data-animate-delay="120"
             onSubmit={handleRequestSubmit}
             onChange={handleRequestChange}
-            className="reveal reveal-up request-form-panel mt-6 grid gap-4 rounded-[0.86rem] border border-[rgba(168,136,103,0.22)] bg-[rgba(255,252,248,0.9)] p-5 sm:p-6"
+            className="reveal reveal-up request-form-panel mt-6 grid gap-4 rounded-[0.86rem] border border-[rgba(88,116,134,0.24)] bg-[rgba(249,252,254,0.9)] p-5 sm:p-6"
           >
               <label className="request-field">
                 <span className="request-label">Organization Name</span>
@@ -584,14 +584,14 @@ export default function Home() {
                 />
               </label>
 
-              <div className="flex flex-col gap-3 border-t border-[rgba(170,138,105,0.2)] pt-3 sm:flex-row sm:items-center sm:justify-between">
+              <div className="flex flex-col gap-3 border-t border-[rgba(88,116,134,0.2)] pt-3 sm:flex-row sm:items-center sm:justify-between">
                 <p className="text-[0.82rem] text-[color:var(--color-muted)]">
                   We use this only to contact your organization.
                 </p>
                 <button
                   type="submit"
                   disabled={isRequestSubmitting}
-                  className="inline-flex h-11 items-center justify-center rounded-full border border-[rgba(155,122,88,0.24)] bg-[rgba(235,213,184,0.95)] px-6 text-[0.75rem] font-semibold uppercase tracking-[0.19em] text-[color:var(--color-foreground)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-[rgba(235,213,184,1)] disabled:cursor-not-allowed disabled:opacity-70"
+                  className="inline-flex h-11 items-center justify-center rounded-full border border-[rgba(74,102,121,0.24)] bg-[rgba(214,228,236,0.96)] px-6 text-[0.74rem] font-semibold uppercase tracking-[0.15em] text-[color:var(--color-foreground)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-[rgba(214,228,236,1)] disabled:cursor-not-allowed disabled:opacity-70"
                 >
                   {isRequestSubmitting ? "Sending..." : "Send Request"}
                 </button>
@@ -600,7 +600,7 @@ export default function Home() {
             {requestError ? (
               <p
                 aria-live="polite"
-                className="rounded-md border border-[rgba(164,95,84,0.3)] bg-[rgba(244,222,218,0.65)] px-3 py-2 text-[0.88rem] text-[color:var(--color-foreground)]"
+                className="rounded-md border border-[rgba(148,90,96,0.28)] bg-[rgba(243,229,232,0.72)] px-3 py-2 text-[0.88rem] text-[color:var(--color-foreground)]"
               >
                 {requestError}
               </p>
@@ -609,7 +609,7 @@ export default function Home() {
             {requestSubmitted ? (
               <p
                 aria-live="polite"
-                className="rounded-md border border-[rgba(155,122,88,0.24)] bg-[rgba(244,234,218,0.5)] px-3 py-2 text-[0.88rem] text-[color:var(--color-foreground)]"
+                className="rounded-md border border-[rgba(74,102,121,0.24)] bg-[rgba(222,235,243,0.56)] px-3 py-2 text-[0.88rem] text-[color:var(--color-foreground)]"
               >
                 Thanks. We received your request and will contact you shortly.
               </p>
@@ -620,12 +620,12 @@ export default function Home() {
 
       <footer
         data-animate
-        className="reveal reveal-up relative border-t border-[color:var(--color-border-strong)] bg-[linear-gradient(180deg,rgba(252,245,236,0.62),rgba(246,234,219,0.72))]"
+        className="reveal reveal-up relative border-t border-[color:var(--color-border-strong)] bg-[linear-gradient(180deg,rgba(241,248,251,0.64),rgba(224,236,243,0.74))]"
       >
         <div className="mx-auto w-full max-w-7xl px-4 py-10 sm:px-8 sm:py-12 lg:px-12">
           <div className="grid gap-8 md:grid-cols-[minmax(0,1fr)_minmax(15rem,20rem)] md:gap-10">
             <div>
-              <p className="font-[family:var(--font-cormorant-garamond)] text-[1.85rem] leading-[0.92] text-[color:var(--color-soft-foreground)] sm:text-[2.15rem]">
+              <p className="font-display text-[1.85rem] leading-[0.95] tracking-[0.01em] text-[color:var(--color-soft-foreground)] sm:text-[2.15rem]">
                 KeepYourHistory
               </p>
               <p className="mt-3 max-w-[22rem] text-[0.92rem] leading-7 text-[color:var(--color-muted)]">
@@ -635,7 +635,7 @@ export default function Home() {
             </div>
 
             <div>
-              <p className="text-[0.72rem] font-semibold uppercase tracking-[0.22em] text-[color:var(--color-accent)] md:text-right">
+              <p className="text-[0.72rem] font-semibold uppercase tracking-[0.16em] text-[color:var(--color-accent)] md:text-right">
                 Links
               </p>
               <div className="mt-4 grid gap-2 text-[0.93rem] text-[color:var(--color-muted)] md:text-right">

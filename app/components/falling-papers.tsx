@@ -1,7 +1,7 @@
 "use client";
 
 const PAPER_COUNT = 110;
-const tones = ["#f3e1c8", "#e6c29a", "#d9b186", "#f7efe4"];
+const tones = ["#d8e6ef", "#c3d8e6", "#aabfce", "#e7eff5"];
 
 const papers = Array.from({ length: PAPER_COUNT }, (_, index) => ({
   id: index,

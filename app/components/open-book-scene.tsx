@@ -184,17 +184,17 @@ export function OpenBookScene() {
     renderer.toneMappingExposure = 1.08;
     container.appendChild(renderer.domElement);
 
-    scene.add(new THREE.AmbientLight(0xf9f2e9, 1.8));
+    scene.add(new THREE.AmbientLight(0xebf3f7, 1.8));
 
     const keyLight = new THREE.DirectionalLight(0xffffff, 2.4);
     keyLight.position.set(7, 9, 7);
     scene.add(keyLight);
 
-    const warmLight = new THREE.DirectionalLight(0xe7bd8a, 1.1);
+    const warmLight = new THREE.DirectionalLight(0xaec7d6, 1.1);
     warmLight.position.set(-8, 4, 5);
     scene.add(warmLight);
 
-    const rimLight = new THREE.DirectionalLight(0xfffbf3, 0.75);
+    const rimLight = new THREE.DirectionalLight(0xf3f8fb, 0.75);
     rimLight.position.set(2, 1, -7);
     scene.add(rimLight);
 
@@ -213,7 +213,7 @@ export function OpenBookScene() {
 
     const outlineMaterial = registerMaterial(
       new THREE.LineBasicMaterial({
-        color: 0x6f675e,
+        color: 0x576b7a,
         transparent: true,
         opacity: 0.24,
         depthWrite: false,
@@ -251,7 +251,7 @@ export function OpenBookScene() {
 
     const coverFaceMaterial = registerMaterial(
       new THREE.MeshStandardMaterial({
-        color: 0xc39059,
+        color: 0x607688,
         roughness: 0.94,
         flatShading: true,
       }),
@@ -259,7 +259,7 @@ export function OpenBookScene() {
 
     const coverEdgeMaterial = registerMaterial(
       new THREE.MeshStandardMaterial({
-        color: 0x8d613a,
+        color: 0x455866,
         roughness: 0.98,
         flatShading: true,
       }),
@@ -267,7 +267,7 @@ export function OpenBookScene() {
 
     const pageFaceMaterial = registerMaterial(
       new THREE.MeshStandardMaterial({
-        color: 0xfff7ea,
+        color: 0xf8fbfd,
         roughness: 0.96,
         flatShading: false,
         side: THREE.DoubleSide,
@@ -276,7 +276,7 @@ export function OpenBookScene() {
 
     const pageEdgeMaterial = registerMaterial(
       new THREE.MeshStandardMaterial({
-        color: 0xe5d2bb,
+        color: 0xd6e1e8,
         roughness: 1,
         flatShading: true,
       }),
@@ -284,7 +284,7 @@ export function OpenBookScene() {
 
     const pageAccentMaterial = registerMaterial(
       new THREE.MeshStandardMaterial({
-        color: 0xd9c0a3,
+        color: 0xc0d0db,
         roughness: 1,
         flatShading: true,
       }),
@@ -292,7 +292,7 @@ export function OpenBookScene() {
 
     const spineMaterial = registerMaterial(
       new THREE.MeshStandardMaterial({
-        color: 0x9d7046,
+        color: 0x526678,
         roughness: 1,
         flatShading: true,
       }),
@@ -300,7 +300,7 @@ export function OpenBookScene() {
 
     const creaseMaterial = registerMaterial(
       new THREE.MeshBasicMaterial({
-        color: 0xb98c61,
+        color: 0x7e97a9,
         transparent: true,
         opacity: 0.26,
         side: THREE.DoubleSide,
@@ -417,7 +417,7 @@ export function OpenBookScene() {
           centerBend: 0.075,
           lateralPull: 0.088,
           spineDepth: 0.036,
-          color: 0xfff9ef,
+          color: 0xf9fcfd,
           roughness: 0.95,
         },
         {
@@ -433,7 +433,7 @@ export function OpenBookScene() {
           centerBend: 0.093,
           lateralPull: 0.102,
           spineDepth: 0.038,
-          color: 0xfcf4e5,
+          color: 0xf3f8fb,
           roughness: 0.96,
         },
         {
@@ -449,7 +449,7 @@ export function OpenBookScene() {
           centerBend: 0.113,
           lateralPull: 0.115,
           spineDepth: 0.041,
-          color: 0xfaefd9,
+          color: 0xebf3f8,
           roughness: 0.97,
         },
         {
@@ -465,7 +465,7 @@ export function OpenBookScene() {
           centerBend: 0.128,
           lateralPull: 0.126,
           spineDepth: 0.044,
-          color: 0xf7e9d1,
+          color: 0xe4eef5,
           roughness: 0.98,
         },
       ];

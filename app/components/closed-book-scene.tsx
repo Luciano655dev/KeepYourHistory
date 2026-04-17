@@ -3,6 +3,45 @@
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
 
+function createCoverTitleTexture() {
+  const canvas = document.createElement("canvas");
+  canvas.width = 1024;
+  canvas.height = 640;
+
+  const context = canvas.getContext("2d");
+  if (!context) {
+    return new THREE.CanvasTexture(canvas);
+  }
+
+  context.clearRect(0, 0, canvas.width, canvas.height);
+
+  const plateGradient = context.createLinearGradient(0, 0, 0, canvas.height);
+  plateGradient.addColorStop(0, "rgba(242, 248, 251, 0.98)");
+  plateGradient.addColorStop(1, "rgba(217, 231, 239, 0.98)");
+  context.fillStyle = plateGradient;
+  context.fillRect(34, 34, canvas.width - 68, canvas.height - 68);
+
+  context.strokeStyle = "rgba(70, 89, 103, 0.68)";
+  context.lineWidth = 8;
+  context.strokeRect(44, 44, canvas.width - 88, canvas.height - 88);
+
+  context.textAlign = "center";
+  context.textBaseline = "middle";
+
+  context.fillStyle = "rgba(57, 80, 97, 0.96)";
+  context.font = "700 122px Fraunces, 'Times New Roman', serif";
+  context.fillText("KEEP YOUR", canvas.width / 2, 258);
+
+  context.fillStyle = "rgba(33, 52, 65, 0.98)";
+  context.font = "800 170px Fraunces, 'Times New Roman', serif";
+  context.fillText("HISTORY", canvas.width / 2, 420);
+
+  const texture = new THREE.CanvasTexture(canvas);
+  texture.colorSpace = THREE.SRGBColorSpace;
+  texture.needsUpdate = true;
+  return texture;
+}
+
 export function ClosedBookScene() {
   const containerRef = useRef<HTMLDivElement | null>(null);
 
@@ -33,22 +72,23 @@ export function ClosedBookScene() {
     renderer.domElement.style.height = "100%";
     container.appendChild(renderer.domElement);
 
-    scene.add(new THREE.AmbientLight(0xf8f0e6, 1.7));
+    scene.add(new THREE.AmbientLight(0xeaf2f6, 1.7));
 
     const keyLight = new THREE.DirectionalLight(0xffffff, 2.4);
     keyLight.position.set(5, 6, 8);
     scene.add(keyLight);
 
-    const warmLight = new THREE.DirectionalLight(0xe5bc8f, 1.05);
+    const warmLight = new THREE.DirectionalLight(0xaec5d3, 1.05);
     warmLight.position.set(-5, 3, 6);
     scene.add(warmLight);
 
-    const rimLight = new THREE.DirectionalLight(0xfffbf3, 0.9);
+    const rimLight = new THREE.DirectionalLight(0xf4f9fb, 0.9);
     rimLight.position.set(-2, 1, -6);
     scene.add(rimLight);
 
     const geometries: THREE.BufferGeometry[] = [];
     const materials: THREE.Material[] = [];
+    const textures: THREE.Texture[] = [];
 
     const registerGeometry = <T extends THREE.BufferGeometry>(geometry: T) => {
       geometries.push(geometry);
@@ -60,9 +100,14 @@ export function ClosedBookScene() {
       return material;
     };
 
+    const registerTexture = <T extends THREE.Texture>(texture: T) => {
+      textures.push(texture);
+      return texture;
+    };
+
     const outlineMaterial = registerMaterial(
       new THREE.LineBasicMaterial({
-        color: 0x685543,
+        color: 0x4f6271,
         transparent: true,
         opacity: 0.34,
         depthWrite: false,
@@ -86,7 +131,7 @@ export function ClosedBookScene() {
 
     const coverFaceMaterial = registerMaterial(
       new THREE.MeshStandardMaterial({
-        color: 0xc39059,
+        color: 0x607689,
         roughness: 0.92,
         flatShading: true,
       }),
@@ -94,7 +139,7 @@ export function ClosedBookScene() {
 
     const coverEdgeMaterial = registerMaterial(
       new THREE.MeshStandardMaterial({
-        color: 0x8d613a,
+        color: 0x455866,
         roughness: 0.98,
         flatShading: true,
       }),
@@ -102,7 +147,7 @@ export function ClosedBookScene() {
 
     const pageFaceMaterial = registerMaterial(
       new THREE.MeshStandardMaterial({
-        color: 0xfff7ea,
+        color: 0xf7fafb,
         roughness: 1,
         flatShading: true,
       }),
@@ -110,7 +155,7 @@ export function ClosedBookScene() {
 
     const pageEdgeMaterial = registerMaterial(
       new THREE.MeshStandardMaterial({
-        color: 0xe4d1b8,
+        color: 0xd5e0e7,
         roughness: 1,
         flatShading: true,
       }),
@@ -118,7 +163,7 @@ export function ClosedBookScene() {
 
     const spineMaterial = registerMaterial(
       new THREE.MeshStandardMaterial({
-        color: 0x996d45,
+        color: 0x516678,
         roughness: 1,
         flatShading: true,
       }),
@@ -126,25 +171,23 @@ export function ClosedBookScene() {
 
     const detailMaterial = registerMaterial(
       new THREE.MeshStandardMaterial({
-        color: 0xe8d6bb,
+        color: 0xe0e9ef,
         roughness: 0.96,
         flatShading: true,
       }),
     );
 
-    const emblemMaterial = registerMaterial(
-      new THREE.MeshStandardMaterial({
-        color: 0xf2e7d0,
-        roughness: 0.88,
-        flatShading: true,
-      }),
+    const coverTitleTexture = registerTexture(createCoverTitleTexture());
+    coverTitleTexture.anisotropy = Math.min(
+      8,
+      renderer.capabilities.getMaxAnisotropy(),
     );
 
-    const shadowMaterial = registerMaterial(
+    const coverTitleMaterial = registerMaterial(
       new THREE.MeshBasicMaterial({
-        color: 0xd0af87,
+        map: coverTitleTexture,
         transparent: true,
-        opacity: 0.18,
+        depthWrite: false,
       }),
     );
 
@@ -155,11 +198,9 @@ export function ClosedBookScene() {
       new THREE.CylinderGeometry(0.14, 0.14, 4.6, 6),
     );
     const titlePlateGeometry = registerGeometry(
-      new THREE.BoxGeometry(1.18, 1.54, 0.04),
+      new THREE.BoxGeometry(2.12, 1.28, 0.04),
     );
-    const bandGeometry = registerGeometry(new THREE.BoxGeometry(1.58, 0.22, 0.03));
-    const emblemGeometry = registerGeometry(new THREE.OctahedronGeometry(0.22, 0));
-    const shadowGeometry = registerGeometry(new THREE.CircleGeometry(3.1, 10));
+    const titleTextGeometry = registerGeometry(new THREE.PlaneGeometry(2, 1.14));
 
     const coverMaterials = [
       coverEdgeMaterial,
@@ -208,6 +249,15 @@ export function ClosedBookScene() {
     topCover.position.set(1.44, 0, 0);
     topCoverGroup.add(topCover);
     addOutline(topCover, coverGeometry);
+
+    const titlePlate = new THREE.Mesh(titlePlateGeometry, detailMaterial);
+    titlePlate.position.set(0.2, 0.32, 0.126);
+    topCover.add(titlePlate);
+    addOutline(titlePlate, titlePlateGeometry, 1, 1.001);
+
+    const titleText = new THREE.Mesh(titleTextGeometry, coverTitleMaterial);
+    titleText.position.set(0.2, 0.32, 0.147);
+    topCover.add(titleText);
 
     const spine = new THREE.Mesh(spineGeometry, spineMaterial);
     spine.position.set(-1.44, 0, 0.02);
@@ -266,6 +316,10 @@ export function ClosedBookScene() {
 
       for (const material of materials) {
         material.dispose();
+      }
+
+      for (const texture of textures) {
+        texture.dispose();
       }
 
       if (container.contains(renderer.domElement)) {
