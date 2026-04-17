@@ -98,6 +98,61 @@ export default function Home() {
     };
   }, []);
 
+  useEffect(() => {
+    const animatedElements = Array.from(
+      document.querySelectorAll<HTMLElement>("[data-animate]"),
+    );
+
+    if (animatedElements.length === 0) {
+      return;
+    }
+
+    if (typeof IntersectionObserver === "undefined") {
+      for (const element of animatedElements) {
+        window.requestAnimationFrame(() => {
+          element.classList.add("is-visible");
+        });
+      }
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) {
+            continue;
+          }
+
+          const element = entry.target as HTMLElement;
+          window.requestAnimationFrame(() => {
+            element.classList.add("is-visible");
+          });
+          observer.unobserve(element);
+        }
+      },
+      {
+        threshold: 0.2,
+        rootMargin: "0px 0px -8% 0px",
+      },
+    );
+
+    for (const element of animatedElements) {
+      const rawDelay = Number(element.dataset.animateDelay ?? "0");
+      const delay = Number.isFinite(rawDelay) ? Math.max(rawDelay, 0) : 0;
+      element.style.setProperty("--reveal-delay", `${delay}ms`);
+
+      if (element.classList.contains("is-visible")) {
+        continue;
+      }
+
+      observer.observe(element);
+    }
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [showHeroBook]);
+
   return (
     <main className="relative flex-1 overflow-hidden">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(216,194,165,0.34),transparent_40%),radial-gradient(circle_at_50%_72%,rgba(225,205,178,0.32),transparent_36%),linear-gradient(180deg,#fffaf4_0%,#fdf7f0_42%,#f8efe4_100%)]" />
@@ -151,11 +206,17 @@ export default function Home() {
         </div>
       </header>
 
-      <section className="relative mx-auto grid min-h-[100svh] w-full max-w-7xl grid-cols-1 items-center gap-10 px-4 py-20 text-center sm:gap-12 sm:px-8 sm:py-24 lg:grid-cols-12 lg:gap-8 lg:px-12 lg:py-28 lg:text-left">
+      <section
+        data-animate
+        className="reveal reveal-up relative mx-auto grid min-h-[100svh] w-full max-w-7xl grid-cols-1 items-center gap-10 px-4 py-20 text-center sm:gap-12 sm:px-8 sm:py-24 lg:grid-cols-12 lg:gap-8 lg:px-12 lg:py-28 lg:text-left"
+      >
         <div className="pointer-events-none absolute left-1/2 top-[10%] z-[2] h-32 w-[min(34rem,92vw)] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(255,249,241,0.92),rgba(255,249,241,0.58)_42%,transparent_74%)] blur-2xl sm:h-40 sm:w-[min(48rem,88vw)] lg:top-[15%] lg:h-44 lg:w-[min(58rem,88vw)]" />
         <div className="pointer-events-none absolute left-1/2 top-[56%] z-[2] h-52 w-[min(38rem,94vw)] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(255,250,244,0.84),rgba(255,250,244,0.32)_44%,transparent_72%)] blur-3xl sm:h-72 sm:w-[min(58rem,92vw)] lg:top-[54%] lg:h-80 lg:w-[min(70rem,96vw)]" />
 
-        <div className="relative z-10 mx-auto flex w-full max-w-[38rem] flex-col items-center justify-center lg:col-span-5 lg:mx-0 lg:max-w-none lg:items-start">
+        <div
+          data-animate
+          className="reveal reveal-left relative z-10 mx-auto flex w-full max-w-[38rem] flex-col items-center justify-center lg:col-span-5 lg:mx-0 lg:max-w-none lg:items-start"
+        >
           <h1 className="mx-auto w-fit text-center font-[family:var(--font-cormorant-garamond)] text-[2.9rem] leading-[0.94] text-[color:var(--color-soft-foreground)] sm:text-[4.2rem] lg:mx-0 lg:text-left lg:text-[4.9rem] xl:text-[5.7rem]">
             <span className="block font-[700] tracking-[0.02em] text-[color:var(--color-accent)]">
               Keep your history
@@ -195,7 +256,11 @@ export default function Home() {
         </div>
 
         {showHeroBook ? (
-          <div className="relative z-10 mx-auto flex h-[22rem] w-full max-w-[36rem] items-center justify-center sm:h-[26rem] sm:max-w-[45rem] lg:col-span-7 lg:mx-0 lg:h-[46rem] lg:max-w-none lg:justify-end">
+          <div
+            data-animate
+            data-animate-delay="120"
+            className="reveal reveal-right relative z-10 mx-auto flex h-[22rem] w-full max-w-[36rem] items-center justify-center sm:h-[26rem] sm:max-w-[45rem] lg:col-span-7 lg:mx-0 lg:h-[46rem] lg:max-w-none lg:justify-end"
+          >
             <div className="pointer-events-none absolute inset-x-[7%] top-[12%] h-[32%] rounded-full bg-[radial-gradient(circle,rgba(255,251,244,0.9),rgba(255,251,244,0.08)_68%,transparent)] blur-3xl" />
             <div className="pointer-events-none absolute inset-x-[12%] bottom-[9%] h-[22%] rounded-full bg-[radial-gradient(circle,rgba(224,197,164,0.24),rgba(224,197,164,0)_72%)] blur-2xl" />
             <div className="relative mx-auto h-full w-full lg:mx-0 lg:ml-auto lg:w-[154%] lg:translate-x-[8%] xl:w-[166%] xl:translate-x-[12%] 2xl:w-[174%]">
@@ -207,12 +272,16 @@ export default function Home() {
 
       <section
         id="about-us"
-        className="relative scroll-mt-28 grid w-full items-center gap-10 overflow-hidden px-4 pb-18 pt-10 sm:gap-12 sm:px-8 sm:pb-24 sm:pt-12 lg:min-h-[44rem] lg:grid-cols-2 lg:gap-0 lg:px-0 lg:py-24"
+        data-animate
+        className="reveal reveal-up relative scroll-mt-28 grid w-full items-center gap-10 overflow-hidden px-4 pb-18 pt-10 sm:gap-12 sm:px-8 sm:pb-24 sm:pt-12 lg:min-h-[44rem] lg:grid-cols-2 lg:gap-0 lg:px-0 lg:py-24"
       >
         <div className="pointer-events-none absolute left-1/2 top-[22%] z-[1] h-32 w-[min(34rem,86vw)] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(255,250,244,0.86),rgba(255,250,244,0.18)_62%,transparent)] blur-3xl sm:h-40 sm:w-[min(46rem,82vw)]" />
         <div className="pointer-events-none absolute left-[26%] top-[54%] z-[1] h-32 w-32 rounded-full bg-[radial-gradient(circle,rgba(225,198,165,0.2),rgba(225,198,165,0)_72%)] blur-3xl" />
 
-        <div className="relative z-10 order-1 flex w-full items-center justify-center lg:col-start-1 lg:min-h-[44rem] lg:justify-self-stretch lg:self-stretch">
+        <div
+          data-animate
+          className="reveal reveal-up relative z-10 order-1 flex w-full items-center justify-center lg:col-start-1 lg:min-h-[44rem] lg:justify-self-stretch lg:self-stretch"
+        >
           <div className="relative h-[20rem] w-full sm:h-[24rem] lg:h-full lg:w-full">
             <div className="relative h-full w-full overflow-hidden">
               <ClosedBookScene />
@@ -220,7 +289,11 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="relative z-20 order-2 mx-auto flex max-w-[39rem] min-w-0 flex-col justify-center text-center lg:col-start-2 lg:mx-0 lg:max-w-none lg:pl-12 lg:pr-12 lg:text-left xl:pl-16 xl:pr-20">
+        <div
+          data-animate
+          data-animate-delay="80"
+          className="reveal reveal-up relative z-20 order-2 mx-auto flex max-w-[39rem] min-w-0 flex-col justify-center text-center lg:col-start-2 lg:mx-0 lg:max-w-none lg:pl-12 lg:pr-12 lg:text-left xl:pl-16 xl:pr-20"
+        >
           <h2 className="font-[family:var(--font-cormorant-garamond)] text-[2.8rem] leading-[0.94] text-[color:var(--color-soft-foreground)] sm:text-[3.7rem] lg:text-[4.7rem]">
             Every person carries a history worth keeping.
           </h2>
@@ -258,11 +331,15 @@ export default function Home() {
 
       <section
         id="how-it-works"
-        className="relative mx-auto w-full max-w-7xl px-4 pb-20 pt-8 sm:px-8 sm:pb-24 lg:px-12 lg:pb-28"
+        data-animate
+        className="reveal reveal-up relative mx-auto w-full max-w-7xl px-4 pb-20 pt-8 sm:px-8 sm:pb-24 lg:px-12 lg:pb-28"
       >
         <div className="pointer-events-none absolute left-1/2 top-[18%] z-[1] h-40 w-[min(46rem,90vw)] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(255,249,241,0.84),rgba(255,249,241,0.18)_58%,transparent)] blur-3xl" />
 
-        <div className="relative z-10 mx-auto max-w-3xl text-center">
+        <div
+          data-animate
+          className="reveal reveal-up relative z-10 mx-auto max-w-3xl text-center"
+        >
           <p className="text-[0.78rem] font-semibold uppercase tracking-[0.22em] text-[color:var(--color-accent)]">
             How It Works
           </p>
@@ -277,7 +354,11 @@ export default function Home() {
         </div>
 
         <div className="relative z-10 mt-12 grid gap-5 lg:grid-cols-4">
-          <article className="rounded-[2rem] border border-[color:var(--color-border)] bg-[rgba(255,251,246,0.82)] p-6 shadow-[0_24px_50px_-36px_rgba(122,91,57,0.34)] backdrop-blur">
+          <article
+            data-animate
+            data-animate-delay="40"
+            className="reveal reveal-up rounded-[2rem] border border-[color:var(--color-border)] bg-[rgba(255,251,246,0.82)] p-6 shadow-[0_24px_50px_-36px_rgba(122,91,57,0.34)] backdrop-blur"
+          >
             <p className="text-[0.76rem] font-semibold uppercase tracking-[0.22em] text-[color:var(--color-accent)]">
               Step 1
             </p>
@@ -291,7 +372,11 @@ export default function Home() {
             </p>
           </article>
 
-          <article className="rounded-[2rem] border border-[color:var(--color-border)] bg-[rgba(255,251,246,0.82)] p-6 shadow-[0_24px_50px_-36px_rgba(122,91,57,0.34)] backdrop-blur">
+          <article
+            data-animate
+            data-animate-delay="120"
+            className="reveal reveal-up rounded-[2rem] border border-[color:var(--color-border)] bg-[rgba(255,251,246,0.82)] p-6 shadow-[0_24px_50px_-36px_rgba(122,91,57,0.34)] backdrop-blur"
+          >
             <p className="text-[0.76rem] font-semibold uppercase tracking-[0.22em] text-[color:var(--color-accent)]">
               Step 2
             </p>
@@ -305,7 +390,11 @@ export default function Home() {
             </p>
           </article>
 
-          <article className="rounded-[2rem] border border-[color:var(--color-border)] bg-[rgba(255,251,246,0.82)] p-6 shadow-[0_24px_50px_-36px_rgba(122,91,57,0.34)] backdrop-blur">
+          <article
+            data-animate
+            data-animate-delay="200"
+            className="reveal reveal-up rounded-[2rem] border border-[color:var(--color-border)] bg-[rgba(255,251,246,0.82)] p-6 shadow-[0_24px_50px_-36px_rgba(122,91,57,0.34)] backdrop-blur"
+          >
             <p className="text-[0.76rem] font-semibold uppercase tracking-[0.22em] text-[color:var(--color-accent)]">
               Step 3
             </p>
@@ -319,7 +408,11 @@ export default function Home() {
             </p>
           </article>
 
-          <article className="rounded-[2rem] border border-[color:var(--color-border)] bg-[rgba(255,251,246,0.82)] p-6 shadow-[0_24px_50px_-36px_rgba(122,91,57,0.34)] backdrop-blur">
+          <article
+            data-animate
+            data-animate-delay="280"
+            className="reveal reveal-up rounded-[2rem] border border-[color:var(--color-border)] bg-[rgba(255,251,246,0.82)] p-6 shadow-[0_24px_50px_-36px_rgba(122,91,57,0.34)] backdrop-blur"
+          >
             <p className="text-[0.76rem] font-semibold uppercase tracking-[0.22em] text-[color:var(--color-accent)]">
               Step 4
             </p>
@@ -337,10 +430,14 @@ export default function Home() {
 
       <section
         id="who-we-are"
-        className="relative mx-auto w-full max-w-7xl px-4 pb-24 pt-4 sm:px-8 sm:pb-28 lg:px-12 lg:pb-32"
+        data-animate
+        className="reveal reveal-up relative mx-auto w-full max-w-7xl px-4 pb-24 pt-4 sm:px-8 sm:pb-28 lg:px-12 lg:pb-32"
       >
         <div className="relative z-10 grid items-start gap-10 lg:grid-cols-[minmax(15rem,18rem)_minmax(0,1fr)] lg:gap-16">
-          <div className="mx-auto grid w-full max-w-[16rem] grid-cols-2 gap-3 sm:max-w-[24rem] sm:gap-4 lg:mx-0 lg:max-w-[17rem] lg:grid-cols-1 lg:gap-5 xl:max-w-[18rem]">
+          <div
+            data-animate
+            className="reveal reveal-left mx-auto grid w-full max-w-[16rem] grid-cols-2 gap-3 sm:max-w-[24rem] sm:gap-4 lg:mx-0 lg:max-w-[17rem] lg:grid-cols-1 lg:gap-5 xl:max-w-[18rem]"
+          >
             <div className="relative aspect-[4/5] overflow-hidden rounded-[1.1rem] sm:rounded-[1.3rem] lg:rounded-[1.5rem]">
               <Image
                 src="/ProfileOne.png"
@@ -362,7 +459,7 @@ export default function Home() {
             </div>
           </div>
 
-          <div>
+          <div data-animate data-animate-delay="80" className="reveal reveal-up">
             <p className="text-[0.78rem] font-semibold uppercase tracking-[0.22em] text-[color:var(--color-accent)]">
               Who We Are
             </p>
@@ -401,13 +498,17 @@ export default function Home() {
 
       <section
         id="order"
-        className="relative scroll-mt-28 mx-auto w-full max-w-7xl px-4 pb-22 sm:px-8 sm:pb-26 lg:px-12 lg:pb-30"
+        data-animate
+        className="reveal reveal-up relative scroll-mt-28 mx-auto w-full max-w-7xl px-4 pb-22 sm:px-8 sm:pb-26 lg:px-12 lg:pb-30"
       >
         <div id="for-places" className="pointer-events-none absolute -top-28" />
         <div id="contact" className="pointer-events-none absolute -top-28" />
         <div className="pointer-events-none absolute left-1/2 top-[18%] z-[1] h-40 w-[min(44rem,88vw)] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(255,249,241,0.88),rgba(255,249,241,0.18)_62%,transparent)] blur-3xl" />
 
-        <div className="relative z-10 mx-auto max-w-3xl">
+        <div
+          data-animate
+          className="reveal reveal-up relative z-10 mx-auto max-w-3xl"
+        >
           <h2 className="text-center font-[family:var(--font-cormorant-garamond)] text-[2.15rem] leading-[0.95] text-[color:var(--color-soft-foreground)] sm:text-[2.7rem]">
             Request a Book
           </h2>
@@ -417,9 +518,11 @@ export default function Home() {
           </p>
 
           <form
+            data-animate
+            data-animate-delay="120"
             onSubmit={handleRequestSubmit}
             onChange={handleRequestChange}
-            className="request-form-panel mt-6 grid gap-4 rounded-[0.86rem] border border-[rgba(168,136,103,0.22)] bg-[rgba(255,252,248,0.9)] p-5 sm:p-6"
+            className="reveal reveal-up request-form-panel mt-6 grid gap-4 rounded-[0.86rem] border border-[rgba(168,136,103,0.22)] bg-[rgba(255,252,248,0.9)] p-5 sm:p-6"
           >
               <label className="request-field">
                 <span className="request-label">Organization Name</span>
@@ -515,7 +618,10 @@ export default function Home() {
         </div>
       </section>
 
-      <footer className="relative border-t border-[color:var(--color-border-strong)] bg-[linear-gradient(180deg,rgba(252,245,236,0.62),rgba(246,234,219,0.72))]">
+      <footer
+        data-animate
+        className="reveal reveal-up relative border-t border-[color:var(--color-border-strong)] bg-[linear-gradient(180deg,rgba(252,245,236,0.62),rgba(246,234,219,0.72))]"
+      >
         <div className="mx-auto w-full max-w-7xl px-4 py-10 sm:px-8 sm:py-12 lg:px-12">
           <div className="grid gap-8 md:grid-cols-[minmax(0,1fr)_minmax(15rem,20rem)] md:gap-10">
             <div>

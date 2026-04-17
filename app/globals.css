@@ -75,6 +75,33 @@ a {
   transform: translateX(-0.08em);
 }
 
+.reveal {
+  --reveal-delay: 0ms;
+  opacity: 0;
+  transition:
+    opacity 300ms ease-out,
+    transform 420ms cubic-bezier(0.22, 0.61, 0.36, 1);
+  transition-delay: var(--reveal-delay);
+  will-change: opacity, transform;
+}
+
+.reveal-up {
+  transform: translate3d(0, 22px, 0);
+}
+
+.reveal-left {
+  transform: translate3d(-20px, 0, 0);
+}
+
+.reveal-right {
+  transform: translate3d(20px, 0, 0);
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
 .request-field {
   display: grid;
   gap: 0.5rem;
