@@ -348,9 +348,9 @@ export function OpenBookScene() {
     scene.add(book);
 
     const cameraBaseX = 0;
-    const cameraLookAtX = -1;
+    const cameraLookAtX = -0.35;
     const cameraBaseZ = 15;
-    const bookBaseScale = 0.75;
+    const bookBaseScale = 0.7;
 
     const leftHalf = new THREE.Group();
     const rightHalf = new THREE.Group();
@@ -602,7 +602,7 @@ export function OpenBookScene() {
         area > 420_000 ? 1 : Math.min(window.devicePixelRatio, 1.25);
       renderer.setPixelRatio(adaptivePixelRatio);
 
-      book.position.x = -0.45;
+      book.position.x = -0.08;
       book.scale.setScalar(bookBaseScale);
       camera.position.set(cameraBaseX, 2.3, cameraBaseZ);
       camera.lookAt(cameraLookAtX, -0.12, 0.18);

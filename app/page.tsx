@@ -195,10 +195,10 @@ export default function Home() {
         </div>
 
         {showHeroBook ? (
-          <div className="relative z-10 mx-auto flex h-[20rem] w-full max-w-[35rem] items-center justify-center sm:h-[25rem] sm:max-w-[43rem] lg:col-span-7 lg:mx-0 lg:h-[42rem] lg:max-w-none lg:justify-end">
+          <div className="relative z-10 mx-auto flex h-[22rem] w-full max-w-[36rem] items-center justify-center sm:h-[26rem] sm:max-w-[45rem] lg:col-span-7 lg:mx-0 lg:h-[46rem] lg:max-w-none lg:justify-end">
             <div className="pointer-events-none absolute inset-x-[7%] top-[12%] h-[32%] rounded-full bg-[radial-gradient(circle,rgba(255,251,244,0.9),rgba(255,251,244,0.08)_68%,transparent)] blur-3xl" />
             <div className="pointer-events-none absolute inset-x-[12%] bottom-[9%] h-[22%] rounded-full bg-[radial-gradient(circle,rgba(224,197,164,0.24),rgba(224,197,164,0)_72%)] blur-2xl" />
-            <div className="relative mx-auto h-full w-full lg:mx-0 lg:ml-auto lg:w-[132%] xl:w-[138%] 2xl:w-[142%]">
+            <div className="relative mx-auto h-full w-full lg:mx-0 lg:ml-auto lg:w-[154%] lg:translate-x-[8%] xl:w-[166%] xl:translate-x-[12%] 2xl:w-[174%]">
               <OpenBookScene />
             </div>
           </div>
