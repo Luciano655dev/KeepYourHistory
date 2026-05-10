@@ -3,13 +3,86 @@
 import { FormEvent, useEffect, useState } from "react";
 import Image from "next/image";
 
-import { ClosedBookScene } from "./components/closed-book-scene";
 import { FallingPapers } from "./components/falling-papers";
-import { OpenBookScene } from "./components/open-book-scene";
+
+const projectHighlights = [
+  "Storytelling",
+  "Interviews",
+  "Website Design",
+  "Bilingual Cards",
+  "Memory Boxes",
+  "Fundraising",
+  "Community Support",
+  "Service",
+];
+
+const journeyStages = [
+  {
+    label: "Investigation",
+    title: "Listening to the community first",
+    description:
+      "We reconnected with a Catholic church community in Brazil and discovered two needs at once: older women whose life lessons deserved to be heard, and local outreach efforts supporting homeless people and vulnerable families.",
+  },
+  {
+    label: "Preparation",
+    title: "Adapting the idea without losing the purpose",
+    description:
+      "Our original plan focused on full biographies and books. After reviewing time, logistics, and remote coordination, we redesigned the project into a more realistic format built around interviews, translated messages, cards, boxes, and a website.",
+  },
+  {
+    label: "Action",
+    title: "Interviews, design, fundraising, and coordination",
+    description:
+      "We interviewed elderly women, translated their reflections into Portuguese and English, designed inspirational cards and memory boxes, developed the website, and coordinated fundraising and donation efforts with the church volunteers.",
+  },
+  {
+    label: "Challenges",
+    title: "Working across distance and constraints",
+    description:
+      "A major challenge was coordinating much of the project remotely from the United States while depending on trusted volunteers in Brazil for local communication, delivery, and distribution. That forced us to be organized, flexible, and practical.",
+  },
+  {
+    label: "Learning Outcomes",
+    title: "Connecting memory with global significance",
+    description:
+      "The project deepened our understanding of intergenerational connection, loneliness among elderly people, food insecurity, homelessness, empathy, and the value of preserving overlooked stories across cultures and communities.",
+  },
+];
+
+const impactCards = [
+  {
+    title: "Interviews and reflections",
+    description:
+      "We listened to elderly women from the church community and documented their advice about faith, family, resilience, regret, happiness, and personal growth.",
+  },
+  {
+    title: "Bilingual message cards",
+    description:
+      "Their words were organized and translated into Portuguese and English so the lessons could be shared more widely across generations.",
+  },
+  {
+    title: "Memory boxes",
+    description:
+      "We designed physical boxes to preserve the cards in a meaningful way, turning short messages into something personal that people can revisit over time.",
+  },
+  {
+    title: "Donation support",
+    description:
+      "Funds raised through the project were used to support food, hygiene products, household supplies, and other essentials for people assisted by the church community.",
+  },
+];
+
+const learningOutcomes = [
+  "Preserving memories and personal histories",
+  "Intergenerational communication",
+  "Loneliness and invisibility among elderly people",
+  "Homelessness and food insecurity",
+  "Empathy, adaptability, and collaboration",
+  "Stronger connection between Brazil and the United States",
+];
 
 export default function Home() {
   const [showHeader, setShowHeader] = useState(false);
-  const [showHeroBook, setShowHeroBook] = useState(false);
   const [requestSubmitted, setRequestSubmitted] = useState(false);
   const [isRequestSubmitting, setIsRequestSubmitting] = useState(false);
   const [requestError, setRequestError] = useState<string | null>(null);
@@ -58,7 +131,7 @@ export default function Home() {
         | null;
 
       if (!response.ok) {
-        throw new Error(data?.error ?? "Unable to send your request right now.");
+        throw new Error(data?.error ?? "Unable to send your message right now.");
       }
 
       setRequestSubmitted(true);
@@ -67,7 +140,7 @@ export default function Home() {
       setRequestError(
         error instanceof Error
           ? error.message
-          : "Unable to send your request right now.",
+          : "Unable to send your message right now.",
       );
     } finally {
       setIsRequestSubmitting(false);
@@ -82,21 +155,6 @@ export default function Home() {
       setRequestError(null);
     }
   };
-
-  useEffect(() => {
-    const mediaQuery = window.matchMedia("(min-width: 1024px)");
-
-    const syncHeroBookVisibility = (event?: MediaQueryListEvent) => {
-      setShowHeroBook(event ? event.matches : mediaQuery.matches);
-    };
-
-    syncHeroBookVisibility();
-    mediaQuery.addEventListener("change", syncHeroBookVisibility);
-
-    return () => {
-      mediaQuery.removeEventListener("change", syncHeroBookVisibility);
-    };
-  }, []);
 
   useEffect(() => {
     const animatedElements = Array.from(
@@ -151,7 +209,7 @@ export default function Home() {
     return () => {
       observer.disconnect();
     };
-  }, [showHeroBook]);
+  }, []);
 
   return (
     <main className="relative flex-1 overflow-hidden">
@@ -170,24 +228,30 @@ export default function Home() {
         }`}
       >
         <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-4 py-3 sm:px-8 sm:py-4 lg:px-12">
-          <a href="#" className="flex items-center">
-            <span className="font-display text-[1.45rem] font-semibold leading-none text-[color:var(--color-accent)] sm:text-[1.7rem]">
-              K
+          <a href="#" className="flex items-center gap-3">
+            <span className="font-display text-[1.2rem] font-semibold leading-none text-[color:var(--color-accent)] sm:text-[1.35rem]">
+              Keep Your History
             </span>
           </a>
 
           <nav className="hidden items-center gap-8 text-[0.78rem] font-medium uppercase tracking-[0.08em] text-[color:var(--color-muted)] md:flex">
             <a
               className="transition-colors duration-200 hover:text-[color:var(--color-soft-foreground)]"
-              href="#how-it-works"
+              href="#project"
             >
-              How it works
+              Project
             </a>
             <a
               className="transition-colors duration-200 hover:text-[color:var(--color-soft-foreground)]"
-              href="#for-places"
+              href="#journey"
             >
-              For places
+              Journey
+            </a>
+            <a
+              className="transition-colors duration-200 hover:text-[color:var(--color-soft-foreground)]"
+              href="#impact"
+            >
+              Impact
             </a>
             <a
               className="transition-colors duration-200 hover:text-[color:var(--color-soft-foreground)]"
@@ -198,93 +262,206 @@ export default function Home() {
           </nav>
 
           <a
-            href="#order"
+            href="#contact"
             className="inline-flex items-center justify-center rounded-full border border-[color:var(--color-border-strong)] bg-[color:var(--color-accent-soft)] px-4 py-2 text-[0.73rem] font-semibold uppercase tracking-[0.12em] text-[color:var(--color-foreground)] shadow-[0_10px_24px_-18px_rgba(43,67,83,0.42)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-[rgba(214,228,236,0.96)] sm:px-5 sm:py-2.5"
           >
-            Order
+            Contact
           </a>
         </div>
       </header>
 
       <section
         data-animate
-        className="reveal reveal-up relative mx-auto grid min-h-[100svh] w-full max-w-7xl grid-cols-1 items-center gap-10 px-4 py-20 text-center sm:gap-12 sm:px-8 sm:py-24 lg:grid-cols-12 lg:gap-8 lg:px-12 lg:py-28 lg:text-left"
+        className="reveal reveal-up relative mx-auto grid min-h-[100svh] w-full max-w-7xl grid-cols-1 items-center gap-12 px-4 py-20 text-center sm:px-8 sm:py-24 lg:grid-cols-12 lg:gap-8 lg:px-12 lg:py-28 lg:text-left"
       >
         <div className="pointer-events-none absolute left-1/2 top-[10%] z-[2] h-32 w-[min(34rem,92vw)] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(246,251,253,0.92),rgba(246,251,253,0.5)_44%,transparent_74%)] blur-2xl sm:h-40 sm:w-[min(48rem,88vw)] lg:top-[15%] lg:h-44 lg:w-[min(58rem,88vw)]" />
         <div className="pointer-events-none absolute left-1/2 top-[56%] z-[2] h-52 w-[min(38rem,94vw)] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(241,248,251,0.84),rgba(241,248,251,0.28)_46%,transparent_72%)] blur-3xl sm:h-72 sm:w-[min(58rem,92vw)] lg:top-[54%] lg:h-80 lg:w-[min(70rem,96vw)]" />
 
         <div
           data-animate
-          className="reveal reveal-left relative z-10 mx-auto flex w-full max-w-[38rem] flex-col items-center justify-center lg:col-span-5 lg:mx-0 lg:max-w-none lg:items-start"
+          className="reveal reveal-left relative z-10 mx-auto flex w-full max-w-[40rem] flex-col items-center justify-center lg:col-span-6 lg:mx-0 lg:max-w-none lg:items-start"
         >
-          <h1 className="mx-auto w-fit text-center font-display text-[2.85rem] leading-[0.98] tracking-[0.01em] text-[color:var(--color-soft-foreground)] sm:text-[4rem] lg:mx-0 lg:text-left lg:text-[4.75rem] xl:text-[5.5rem]">
-            <span className="block font-semibold tracking-[0.015em] text-[color:var(--color-accent)]">
-              Keep your history
+          <p className="text-[0.76rem] font-semibold uppercase tracking-[0.18em] text-[color:var(--color-accent)]">
+            IB CAS Project
+          </p>
+          <h1 className="mt-4 font-display text-[2.9rem] leading-[0.96] tracking-[0.01em] text-[color:var(--color-soft-foreground)] sm:text-[4rem] lg:text-[4.9rem] xl:text-[5.45rem]">
+            <span className="block font-semibold text-[color:var(--color-accent)]">
+              Keep Your History
             </span>
-            <span className="mt-1 block font-medium">
-              alive
+            <span className="mt-2 block font-medium">
+              stories, service, and memory across generations.
             </span>
           </h1>
 
-          <div className="mt-6 max-w-[34rem] space-y-4 sm:mt-8 sm:space-y-5">
+          <div className="mt-6 max-w-[36rem] space-y-4 sm:mt-8 sm:space-y-5">
             <p className="text-[1rem] leading-[1.7] text-[color:var(--color-foreground)] sm:text-[1.12rem] sm:leading-[1.75]">
-              We partner with retirement homes, veterans&apos; homes,
-              hospitals, and care communities to turn lived experiences into
-              printed books.
+              For our CAS project, my brother and I worked with a Catholic
+              church community in Brazil to preserve life lessons from older
+              women while also helping people in vulnerable situations through
+              donations and local community support.
             </p>
-            <p className="text-[0.94rem] leading-7 text-[color:var(--color-muted)] sm:text-[1.02rem] sm:leading-8">
-              Each book protects voices that might otherwise fade, giving
-              families, students, and future generations something real to
-              hold, read, and share.
+            <p className="text-[0.95rem] leading-7 text-[color:var(--color-muted)] sm:text-[1.02rem] sm:leading-8">
+              What began as a more book-centered idea evolved into something
+              more realistic and more human: interviews, bilingual message
+              cards, memory boxes, a website, fundraising, and a project that
+              connected Brazil and the United States.
             </p>
           </div>
 
           <div className="relative z-10 mt-8 flex w-full max-w-[32rem] flex-col items-stretch gap-3 sm:mt-10 sm:flex-row sm:items-center lg:w-auto lg:max-w-none lg:items-start">
             <a
-              href="#about-us"
+              href="#project"
               className="inline-flex min-w-[11rem] items-center justify-center rounded-full border border-[rgba(74,102,121,0.28)] bg-[rgba(214,228,236,0.9)] px-6 py-3.5 text-[0.76rem] font-semibold uppercase tracking-[0.14em] text-[color:var(--color-foreground)] shadow-[0_18px_34px_-26px_rgba(45,68,84,0.48)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-[rgba(214,228,236,1)] hover:shadow-[0_22px_38px_-26px_rgba(45,68,84,0.52)] sm:min-w-[11.5rem] sm:px-7 sm:py-4 sm:text-[0.78rem]"
             >
-              Discover
+              Read the Project
             </a>
             <a
-              href="#order"
+              href="#contact"
               className="inline-flex min-w-[11rem] items-center justify-center rounded-full border border-[rgba(84,112,130,0.24)] bg-[rgba(247,251,253,0.86)] px-6 py-3.5 text-[0.76rem] font-semibold uppercase tracking-[0.14em] text-[color:var(--color-foreground)] shadow-[inset_0_1px_0_rgba(255,255,255,0.62),0_16px_30px_-26px_rgba(45,68,84,0.34)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-[rgba(247,251,253,0.98)] sm:min-w-[11.5rem] sm:px-7 sm:py-4 sm:text-[0.78rem]"
             >
-              Request a Book
+              Contact Us
             </a>
+          </div>
+
+          <div className="mt-7 flex flex-wrap justify-center gap-2.5 lg:justify-start">
+            {projectHighlights.map((highlight) => (
+              <span
+                key={highlight}
+                className="rounded-full border border-[rgba(86,114,132,0.2)] bg-[rgba(247,251,253,0.7)] px-3.5 py-2 text-[0.74rem] font-medium tracking-[0.06em] text-[color:var(--color-muted)] shadow-[0_10px_22px_-18px_rgba(47,71,87,0.4)]"
+              >
+                {highlight}
+              </span>
+            ))}
           </div>
         </div>
 
-        {showHeroBook ? (
-          <div
-            data-animate
-            data-animate-delay="120"
-            className="reveal reveal-right relative z-10 mx-auto flex h-[22rem] w-full max-w-[36rem] items-center justify-center sm:h-[26rem] sm:max-w-[45rem] lg:col-span-7 lg:mx-0 lg:h-[46rem] lg:max-w-none lg:justify-end"
-          >
-            <div className="pointer-events-none absolute inset-x-[7%] top-[12%] h-[32%] rounded-full bg-[radial-gradient(circle,rgba(247,251,253,0.9),rgba(247,251,253,0.1)_68%,transparent)] blur-3xl" />
-            <div className="pointer-events-none absolute inset-x-[12%] bottom-[9%] h-[22%] rounded-full bg-[radial-gradient(circle,rgba(156,182,198,0.2),rgba(156,182,198,0)_72%)] blur-2xl" />
-            <div className="relative mx-auto h-full w-full lg:mx-0 lg:ml-auto lg:w-[154%] lg:translate-x-[8%] xl:w-[166%] xl:translate-x-[12%] 2xl:w-[174%]">
-              <OpenBookScene />
+        <div
+          data-animate
+          data-animate-delay="120"
+          className="reveal reveal-right relative z-10 mx-auto flex h-[24rem] w-full max-w-[34rem] items-center justify-center sm:h-[28rem] lg:col-span-6 lg:mx-0 lg:h-[40rem] lg:max-w-none lg:justify-end"
+        >
+          <div className="relative h-full w-full max-w-[31rem] lg:max-w-[35rem]">
+            <div className="absolute left-[6%] top-[6%] h-[62%] w-[54%] rotate-[-9deg] rounded-[2rem] border border-[rgba(84,112,130,0.18)] bg-[rgba(245,250,252,0.8)] p-5 shadow-[0_28px_50px_-38px_rgba(45,68,84,0.42)] backdrop-blur">
+              <p className="text-[0.72rem] font-semibold uppercase tracking-[0.16em] text-[color:var(--color-accent)]">
+                Keep Your History
+              </p>
+              <p className="mt-4 font-display text-[1.6rem] leading-[1.02] text-[color:var(--color-soft-foreground)]">
+                Portuguese + English
+              </p>
+              <div className="mt-5 space-y-2 text-[0.88rem] leading-6 text-[color:var(--color-muted)]">
+                <p>Interviews from the church community</p>
+                <p>Cards designed from real advice</p>
+                <p>Memory boxes for long-term preservation</p>
+              </div>
+            </div>
+
+            <article className="absolute left-1/2 top-1/2 z-20 w-[72%] max-w-[26rem] -translate-x-1/2 -translate-y-1/2 rotate-[4deg] rounded-[2rem] border border-[rgba(74,102,121,0.22)] bg-[rgba(250,253,255,0.96)] p-6 shadow-[0_32px_64px_-34px_rgba(34,52,65,0.42)]">
+              <p className="text-[0.72rem] font-semibold uppercase tracking-[0.18em] text-[color:var(--color-accent)]">
+                Featured Message
+              </p>
+              <p className="mt-5 font-display text-[1.85rem] leading-[1.02] text-[color:var(--color-soft-foreground)] sm:text-[2.1rem]">
+                Do not let fear stop your opportunities.
+              </p>
+              <p className="mt-4 text-[0.93rem] leading-7 text-[color:var(--color-muted)]">
+                Nao deixe o medo parar suas oportunidades.
+              </p>
+              <div className="mt-6 border-t border-[rgba(84,112,130,0.16)] pt-4 text-[0.8rem] uppercase tracking-[0.14em] text-[color:var(--color-muted)]">
+                From interviews with elderly women in Brazil
+              </div>
+            </article>
+
+            <div className="absolute bottom-[8%] right-[4%] z-30 w-[46%] rounded-[1.4rem] border border-[rgba(86,114,132,0.18)] bg-[rgba(225,237,244,0.9)] p-4 shadow-[0_24px_44px_-34px_rgba(45,68,84,0.4)]">
+              <p className="text-[0.7rem] font-semibold uppercase tracking-[0.16em] text-[color:var(--color-accent)]">
+                Community Support
+              </p>
+              <p className="mt-3 text-[0.92rem] leading-6 text-[color:var(--color-foreground)]">
+                Fundraising helped support food, hygiene products, and other
+                essentials for vulnerable families and homeless individuals.
+              </p>
+            </div>
+
+            <div className="absolute -bottom-2 left-[10%] z-30 hidden h-28 w-28 overflow-hidden rounded-[1.3rem] border border-[rgba(84,112,130,0.18)] bg-[rgba(249,252,254,0.94)] p-1 shadow-[0_20px_38px_-26px_rgba(45,68,84,0.4)] sm:block">
+              <div className="relative h-full w-full overflow-hidden rounded-[1rem]">
+                <Image
+                  src="/WhatsApp Image May 10 2026 (3).jpeg"
+                  alt="Keep Your History memory boxes"
+                  fill
+                  sizes="7rem"
+                  className="object-cover"
+                />
+              </div>
             </div>
           </div>
-        ) : null}
+        </div>
       </section>
 
       <section
-        id="about-us"
+        id="project"
         data-animate
-        className="reveal reveal-up relative scroll-mt-28 grid w-full items-center gap-10 overflow-hidden px-4 pb-18 pt-10 sm:gap-12 sm:px-8 sm:pb-24 sm:pt-12 lg:min-h-[44rem] lg:grid-cols-2 lg:gap-0 lg:px-0 lg:py-24"
+        className="reveal reveal-up relative scroll-mt-28 grid w-full items-center gap-10 overflow-hidden px-4 pb-20 pt-8 sm:gap-12 sm:px-8 sm:pb-24 lg:grid-cols-2 lg:gap-14 lg:px-12 lg:py-24"
       >
         <div className="pointer-events-none absolute left-1/2 top-[22%] z-[1] h-32 w-[min(34rem,86vw)] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(247,251,253,0.86),rgba(247,251,253,0.2)_62%,transparent)] blur-3xl sm:h-40 sm:w-[min(46rem,82vw)]" />
-        <div className="pointer-events-none absolute left-[26%] top-[54%] z-[1] h-32 w-32 rounded-full bg-[radial-gradient(circle,rgba(158,185,200,0.2),rgba(158,185,200,0)_72%)] blur-3xl" />
 
         <div
           data-animate
-          className="reveal reveal-up relative z-10 order-1 flex w-full items-center justify-center lg:col-start-1 lg:min-h-[44rem] lg:justify-self-stretch lg:self-stretch"
+          className="reveal reveal-up relative z-10 order-1 mx-auto flex w-full max-w-[34rem] items-center justify-center lg:order-none lg:max-w-none lg:justify-start"
         >
-          <div className="relative h-[20rem] w-full sm:h-[24rem] lg:h-full lg:w-full">
-            <div className="relative h-full w-full overflow-hidden">
-              <ClosedBookScene />
+          <div className="relative w-full max-w-[30rem]">
+            <div className="absolute -left-4 top-10 hidden rounded-full border border-[rgba(84,112,130,0.16)] bg-[rgba(247,251,253,0.82)] px-4 py-2 text-[0.72rem] uppercase tracking-[0.14em] text-[color:var(--color-muted)] shadow-[0_16px_32px_-24px_rgba(45,68,84,0.4)] sm:block">
+              Adapted, not abandoned
+            </div>
+
+            <article className="relative rounded-[2.2rem] border border-[rgba(74,102,121,0.2)] bg-[rgba(249,252,254,0.92)] p-6 shadow-[0_36px_64px_-42px_rgba(34,52,65,0.46)] backdrop-blur sm:p-8">
+              <p className="text-[0.74rem] font-semibold uppercase tracking-[0.18em] text-[color:var(--color-accent)]">
+                Message Card
+              </p>
+              <p className="mt-6 font-display text-[2rem] leading-[1.02] text-[color:var(--color-soft-foreground)] sm:text-[2.45rem]">
+                Trust God in difficult moments. Value family. Appreciate simple
+                things.
+              </p>
+              <p className="mt-5 text-[1rem] leading-7 text-[color:var(--color-muted)]">
+                These reflections shaped the heart of the project and became
+                part of the bilingual cards and memory boxes we created.
+              </p>
+              <div className="mt-8 grid gap-3 sm:grid-cols-2">
+                <div className="rounded-[1.2rem] border border-[rgba(84,112,130,0.16)] bg-[rgba(236,245,249,0.72)] p-4">
+                  <p className="text-[0.7rem] font-semibold uppercase tracking-[0.15em] text-[color:var(--color-accent)]">
+                    Before
+                  </p>
+                  <p className="mt-2 text-[0.9rem] leading-6 text-[color:var(--color-foreground)]">
+                    Full biographies, books, and a larger publishing concept.
+                  </p>
+                </div>
+                <div className="rounded-[1.2rem] border border-[rgba(84,112,130,0.16)] bg-[rgba(250,252,254,0.84)] p-4">
+                  <p className="text-[0.7rem] font-semibold uppercase tracking-[0.15em] text-[color:var(--color-accent)]">
+                    After
+                  </p>
+                  <p className="mt-2 text-[0.9rem] leading-6 text-[color:var(--color-foreground)]">
+                    Interviews, cards, boxes, a website, and direct community support.
+                  </p>
+                </div>
+              </div>
+            </article>
+
+            <div className="mt-4 grid gap-4 sm:grid-cols-2">
+              <div className="relative aspect-[4/3] overflow-hidden rounded-[1.5rem] border border-[rgba(84,112,130,0.16)] shadow-[0_20px_38px_-30px_rgba(45,68,84,0.36)]">
+                <Image
+                  src="/WhatsApp Image May 10 2026.jpeg"
+                  alt="Catholic church volunteer community in Brazil"
+                  fill
+                  sizes="(min-width: 1024px) 15rem, 50vw"
+                  className="object-cover"
+                />
+              </div>
+              <div className="relative aspect-[4/3] overflow-hidden rounded-[1.5rem] border border-[rgba(84,112,130,0.16)] shadow-[0_20px_38px_-30px_rgba(45,68,84,0.36)]">
+                <Image
+                  src="/WhatsApp Image May 10 2026 (3).jpeg"
+                  alt="Keep Your History memory boxes prepared for the project"
+                  fill
+                  sizes="(min-width: 1024px) 15rem, 50vw"
+                  className="object-cover"
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -292,37 +469,67 @@ export default function Home() {
         <div
           data-animate
           data-animate-delay="80"
-          className="reveal reveal-up relative z-20 order-2 mx-auto flex max-w-[39rem] min-w-0 flex-col justify-center text-center lg:col-start-2 lg:mx-0 lg:max-w-none lg:pl-12 lg:pr-12 lg:text-left xl:pl-16 xl:pr-20"
+          className="reveal reveal-up relative z-20 order-2 mx-auto flex max-w-[39rem] min-w-0 flex-col justify-center text-center lg:mx-0 lg:max-w-none lg:text-left"
         >
-          <h2 className="font-display text-[2.7rem] leading-[0.96] tracking-[0.01em] text-[color:var(--color-soft-foreground)] sm:text-[3.6rem] lg:text-[4.55rem]">
-            Every person carries a history worth keeping.
+          <p className="text-[0.75rem] font-semibold uppercase tracking-[0.18em] text-[color:var(--color-accent)]">
+            Project Overview
+          </p>
+          <h2 className="mt-4 font-display text-[2.7rem] leading-[0.96] tracking-[0.01em] text-[color:var(--color-soft-foreground)] sm:text-[3.6rem] lg:text-[4.3rem]">
+            The idea changed. The purpose stayed.
           </h2>
 
           <div className="mt-6 space-y-5 text-[color:var(--color-muted)] sm:mt-7">
             <p className="text-[1rem] leading-7 text-[color:var(--color-foreground)] sm:text-[1.08rem] sm:leading-8">
-              KeepYourHistory works with institutions that care for elders,
-              veterans, patients, and residents to gather personal histories,
-              memories, and reflections into a physical archive.
+              At the beginning of our investigation, Keep Your History was more
+              focused on preserving personal histories through books and a
+              website. Once we planned everything more carefully, we realized
+              that some parts of the original idea would not work within our
+              timeframe and circumstances.
             </p>
             <p className="text-[0.98rem] leading-7 sm:text-[1.04rem] sm:leading-8">
-              The result is a printed book the institution can keep and share,
-              honoring each person beyond their lifetime and making their
-              experiences accessible to the wider community.
+              Instead of abandoning the project, we adapted it into something
+              more achievable while preserving the original goal: keeping older
+              generations&apos; memories and life lessons alive while helping
+              people in vulnerable situations through service, donations, and
+              community connection.
             </p>
           </div>
 
           <div className="mt-8 grid gap-4 text-left sm:grid-cols-2 sm:gap-5">
-            <div className="border-t border-[color:var(--color-border-strong)] pt-4">
-              <p className="text-[1rem] leading-7 text-[color:var(--color-foreground)]">
-                Not everyone leaves behind a biography. We help create a record
-                so ordinary lives are preserved with the dignity they deserve.
+            <div className="rounded-[1.3rem] border border-[rgba(84,112,130,0.16)] bg-[rgba(248,251,253,0.8)] p-4">
+              <p className="text-[0.72rem] font-semibold uppercase tracking-[0.15em] text-[color:var(--color-accent)]">
+                Investigation
+              </p>
+              <p className="mt-3 text-[0.98rem] leading-7 text-[color:var(--color-foreground)]">
+                We identified the importance of intergenerational connection,
+                empathy, and overlooked stories.
               </p>
             </div>
-            <div className="border-t border-[color:var(--color-border-strong)] pt-4">
-              <p className="text-[1rem] leading-7 text-[color:var(--color-foreground)]">
-                These books keep stories available to families, students, and
-                society, allowing each life to keep contributing through what
-                it lived and learned.
+            <div className="rounded-[1.3rem] border border-[rgba(84,112,130,0.16)] bg-[rgba(248,251,253,0.8)] p-4">
+              <p className="text-[0.72rem] font-semibold uppercase tracking-[0.15em] text-[color:var(--color-accent)]">
+                Service
+              </p>
+              <p className="mt-3 text-[0.98rem] leading-7 text-[color:var(--color-foreground)]">
+                The project expanded beyond storytelling to include fundraising
+                and donation coordination with the church community.
+              </p>
+            </div>
+            <div className="rounded-[1.3rem] border border-[rgba(84,112,130,0.16)] bg-[rgba(248,251,253,0.8)] p-4">
+              <p className="text-[0.72rem] font-semibold uppercase tracking-[0.15em] text-[color:var(--color-accent)]">
+                Creativity
+              </p>
+              <p className="mt-3 text-[0.98rem] leading-7 text-[color:var(--color-foreground)]">
+                We translated messages, designed the visual identity, and built
+                physical memory boxes to hold the cards.
+              </p>
+            </div>
+            <div className="rounded-[1.3rem] border border-[rgba(84,112,130,0.16)] bg-[rgba(248,251,253,0.8)] p-4">
+              <p className="text-[0.72rem] font-semibold uppercase tracking-[0.15em] text-[color:var(--color-accent)]">
+                Collaboration
+              </p>
+              <p className="mt-3 text-[0.98rem] leading-7 text-[color:var(--color-foreground)]">
+                Because we were not physically in Brazil, trusted volunteers
+                represented the project locally during donation distribution.
               </p>
             </div>
           </div>
@@ -330,7 +537,7 @@ export default function Home() {
       </section>
 
       <section
-        id="how-it-works"
+        id="journey"
         data-animate
         className="reveal reveal-up relative mx-auto w-full max-w-7xl px-4 pb-20 pt-8 sm:px-8 sm:pb-24 lg:px-12 lg:pb-28"
       >
@@ -341,97 +548,132 @@ export default function Home() {
           className="reveal reveal-up relative z-10 mx-auto max-w-3xl text-center"
         >
           <p className="text-[0.75rem] font-semibold uppercase tracking-[0.18em] text-[color:var(--color-accent)]">
-            How It Works
+            Project Journey
           </p>
-          <h2 className="mt-4 font-display text-[2.7rem] leading-[0.96] tracking-[0.01em] text-[color:var(--color-soft-foreground)] sm:text-[3.6rem] lg:text-[4.55rem]">
-            From lived experience to a book that stays.
+          <h2 className="mt-4 font-display text-[2.7rem] leading-[0.96] tracking-[0.01em] text-[color:var(--color-soft-foreground)] sm:text-[3.6rem] lg:text-[4.4rem]">
+            Investigation, preparation, action, and reflection.
           </h2>
           <p className="mt-5 text-[1rem] leading-7 text-[color:var(--color-muted)] sm:text-[1.05rem] sm:leading-8">
-            We make the process simple for institutions while giving each
-            participant space to share the memories, milestones, and personal
-            details that matter most.
+            Keep Your History became a long-term project because it grew through
+            planning, revision, communication, design work, and ongoing contact
+            with the church group in Brazil.
           </p>
         </div>
 
-        <div className="relative z-10 mt-12 grid gap-5 lg:grid-cols-4">
-          <article
-            data-animate
-            data-animate-delay="40"
-            className="reveal reveal-up rounded-[2rem] border border-[color:var(--color-border)] bg-[rgba(248,251,253,0.82)] p-6 shadow-[0_24px_50px_-36px_rgba(45,68,84,0.32)] backdrop-blur"
-          >
-            <p className="text-[0.74rem] font-semibold uppercase tracking-[0.16em] text-[color:var(--color-accent)]">
-              Step 1
-            </p>
-            <h3 className="mt-4 text-[1.3rem] font-semibold text-[color:var(--color-soft-foreground)]">
-              We partner with your institution
-            </h3>
-            <p className="mt-3 text-[0.98rem] leading-7 text-[color:var(--color-muted)]">
-              A retirement home, veterans&apos; home, hospital, or care
-              community contacts us, and we organize the project around the
-              people who want to participate.
-            </p>
-          </article>
+        <div className="relative z-10 mt-12 grid gap-5 sm:grid-cols-2 xl:grid-cols-5">
+          {journeyStages.map((stage, index) => (
+            <article
+              key={stage.label}
+              data-animate
+              data-animate-delay={40 + index * 60}
+              className="reveal reveal-up rounded-[2rem] border border-[color:var(--color-border)] bg-[rgba(248,251,253,0.82)] p-6 shadow-[0_24px_50px_-36px_rgba(45,68,84,0.32)] backdrop-blur"
+            >
+              <p className="text-[0.74rem] font-semibold uppercase tracking-[0.16em] text-[color:var(--color-accent)]">
+                {stage.label}
+              </p>
+              <h3 className="mt-4 text-[1.22rem] font-semibold leading-7 text-[color:var(--color-soft-foreground)]">
+                {stage.title}
+              </h3>
+              <p className="mt-3 text-[0.96rem] leading-7 text-[color:var(--color-muted)]">
+                {stage.description}
+              </p>
+            </article>
+          ))}
+        </div>
+      </section>
 
-          <article
-            data-animate
-            data-animate-delay="120"
-            className="reveal reveal-up rounded-[2rem] border border-[color:var(--color-border)] bg-[rgba(248,251,253,0.82)] p-6 shadow-[0_24px_50px_-36px_rgba(45,68,84,0.32)] backdrop-blur"
-          >
-            <p className="text-[0.74rem] font-semibold uppercase tracking-[0.16em] text-[color:var(--color-accent)]">
-              Step 2
+      <section
+        id="impact"
+        data-animate
+        className="reveal reveal-up relative mx-auto w-full max-w-7xl px-4 pb-24 pt-4 sm:px-8 sm:pb-28 lg:px-12 lg:pb-32"
+      >
+        <div className="relative z-10 grid gap-10 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-14">
+          <div data-animate className="reveal reveal-left">
+            <p className="text-[0.75rem] font-semibold uppercase tracking-[0.18em] text-[color:var(--color-accent)]">
+              Final Impact
             </p>
-            <h3 className="mt-4 text-[1.3rem] font-semibold text-[color:var(--color-soft-foreground)]">
-              We gather each person&apos;s story
-            </h3>
-            <p className="mt-3 text-[0.98rem] leading-7 text-[color:var(--color-muted)]">
-              Histories can be collected online or in person through guided
-              questions, short biographies, personal reflections, and selected
-              photographs.
-            </p>
-          </article>
+            <h2 className="mt-4 font-display text-[2.7rem] leading-[0.96] tracking-[0.01em] text-[color:var(--color-soft-foreground)] sm:text-[3.6rem] lg:text-[4.3rem]">
+              What the project included in the end.
+            </h2>
 
-          <article
-            data-animate
-            data-animate-delay="200"
-            className="reveal reveal-up rounded-[2rem] border border-[color:var(--color-border)] bg-[rgba(248,251,253,0.82)] p-6 shadow-[0_24px_50px_-36px_rgba(45,68,84,0.32)] backdrop-blur"
-          >
-            <p className="text-[0.74rem] font-semibold uppercase tracking-[0.16em] text-[color:var(--color-accent)]">
-              Step 3
-            </p>
-            <h3 className="mt-4 text-[1.3rem] font-semibold text-[color:var(--color-soft-foreground)]">
-              We design the book
-            </h3>
-            <p className="mt-3 text-[0.98rem] leading-7 text-[color:var(--color-muted)]">
-              Each participant receives a two-page spread that can include
-              images, written responses, a brief life story, and the details
-              that help their memory feel personal and complete.
-            </p>
-          </article>
+            <div className="mt-6 space-y-5 text-[color:var(--color-muted)]">
+              <p className="text-[1rem] leading-7 text-[color:var(--color-foreground)] sm:text-[1.08rem] sm:leading-8">
+                The final version of Keep Your History combined storytelling,
+                interviews, translation, design, website development,
+                fundraising, organization, and service.
+              </p>
+              <p className="text-[0.98rem] leading-7 sm:text-[1.04rem] sm:leading-8">
+                Even though the website is still being refined, it became an
+                important way to present the project as something lasting rather
+                than a one-time activity.
+              </p>
+            </div>
 
-          <article
-            data-animate
-            data-animate-delay="280"
-            className="reveal reveal-up rounded-[2rem] border border-[color:var(--color-border)] bg-[rgba(248,251,253,0.82)] p-6 shadow-[0_24px_50px_-36px_rgba(45,68,84,0.32)] backdrop-blur"
-          >
-            <p className="text-[0.74rem] font-semibold uppercase tracking-[0.16em] text-[color:var(--color-accent)]">
-              Step 4
-            </p>
-            <h3 className="mt-4 text-[1.3rem] font-semibold text-[color:var(--color-soft-foreground)]">
-              We print, deliver, and preserve access
-            </h3>
-            <p className="mt-3 text-[0.98rem] leading-7 text-[color:var(--color-muted)]">
-              We print the finished book and send it to the location, while
-              also preserving the histories online so they remain accessible in
-              both physical and digital form.
-            </p>
-          </article>
+            <div className="mt-8 rounded-[2rem] border border-[rgba(84,112,130,0.16)] bg-[rgba(248,251,253,0.82)] p-6 shadow-[0_20px_40px_-34px_rgba(45,68,84,0.3)]">
+              <p className="text-[0.72rem] font-semibold uppercase tracking-[0.16em] text-[color:var(--color-accent)]">
+                Learning Outcomes
+              </p>
+              <div className="mt-4 flex flex-wrap gap-2.5">
+                {learningOutcomes.map((item) => (
+                  <span
+                    key={item}
+                    className="rounded-full border border-[rgba(84,112,130,0.16)] bg-[rgba(255,255,255,0.72)] px-3.5 py-2 text-[0.8rem] leading-5 text-[color:var(--color-foreground)]"
+                  >
+                    {item}
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            <div className="mt-5 grid gap-4 sm:grid-cols-2">
+              <div className="relative aspect-[4/3] overflow-hidden rounded-[1.5rem] border border-[rgba(84,112,130,0.16)] shadow-[0_20px_38px_-30px_rgba(45,68,84,0.36)]">
+                <Image
+                  src="/WhatsApp Image May 10 2026 (1).jpeg"
+                  alt="Donation support organized with the church community"
+                  fill
+                  sizes="(min-width: 1024px) 14rem, 50vw"
+                  className="object-cover"
+                />
+              </div>
+              <div className="relative aspect-[4/3] overflow-hidden rounded-[1.5rem] border border-[rgba(84,112,130,0.16)] shadow-[0_20px_38px_-30px_rgba(45,68,84,0.36)]">
+                <Image
+                  src="/WhatsApp Image May 10 2026 (2).jpeg"
+                  alt="Volunteer group connected to the Keep Your History project"
+                  fill
+                  sizes="(min-width: 1024px) 14rem, 50vw"
+                  className="object-cover"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="grid gap-5 sm:grid-cols-2">
+            {impactCards.map((card, index) => (
+              <article
+                key={card.title}
+                data-animate
+                data-animate-delay={80 + index * 60}
+                className="reveal reveal-up rounded-[1.9rem] border border-[rgba(84,112,130,0.16)] bg-[rgba(249,252,254,0.88)] p-6 shadow-[0_22px_44px_-34px_rgba(45,68,84,0.32)]"
+              >
+                <p className="text-[0.72rem] font-semibold uppercase tracking-[0.16em] text-[color:var(--color-accent)]">
+                  Outcome {index + 1}
+                </p>
+                <h3 className="mt-4 text-[1.24rem] font-semibold text-[color:var(--color-soft-foreground)]">
+                  {card.title}
+                </h3>
+                <p className="mt-3 text-[0.97rem] leading-7 text-[color:var(--color-muted)]">
+                  {card.description}
+                </p>
+              </article>
+            ))}
+          </div>
         </div>
       </section>
 
       <section
         id="who-we-are"
         data-animate
-        className="reveal reveal-up relative mx-auto w-full max-w-7xl px-4 pb-24 pt-4 sm:px-8 sm:pb-28 lg:px-12 lg:pb-32"
+        className="reveal reveal-up relative mx-auto w-full max-w-7xl px-4 pb-24 pt-2 sm:px-8 sm:pb-28 lg:px-12 lg:pb-32"
       >
         <div className="relative z-10 grid items-start gap-10 lg:grid-cols-[minmax(15rem,18rem)_minmax(0,1fr)] lg:gap-16">
           <div
@@ -441,7 +683,7 @@ export default function Home() {
             <div className="relative aspect-[4/5] overflow-hidden rounded-[1.1rem] sm:rounded-[1.3rem] lg:rounded-[1.5rem]">
               <Image
                 src="/ProfileOne.png"
-                alt="One of the KeepYourHistory student creators"
+                alt="One of the Keep Your History creators"
                 fill
                 sizes="(min-width: 1280px) 18rem, (min-width: 1024px) 17rem, (min-width: 640px) 11rem, 7rem"
                 className="object-cover"
@@ -451,7 +693,7 @@ export default function Home() {
             <div className="relative aspect-[4/5] overflow-hidden rounded-[1.1rem] sm:rounded-[1.3rem] lg:rounded-[1.5rem]">
               <Image
                 src="/ProfileTwo.jpg"
-                alt="One of the KeepYourHistory student creators"
+                alt="One of the Keep Your History creators"
                 fill
                 sizes="(min-width: 1280px) 18rem, (min-width: 1024px) 17rem, (min-width: 640px) 11rem, 7rem"
                 className="object-cover"
@@ -463,33 +705,30 @@ export default function Home() {
             <p className="text-[0.75rem] font-semibold uppercase tracking-[0.18em] text-[color:var(--color-accent)]">
               Who We Are
             </p>
-            <h2 className="mt-4 font-display text-[2.7rem] leading-[0.96] tracking-[0.01em] text-[color:var(--color-soft-foreground)] sm:text-[3.6rem] lg:text-[4.55rem]">
-              Two students from Windermere Preparatory School.
+            <h2 className="mt-4 font-display text-[2.7rem] leading-[0.96] tracking-[0.01em] text-[color:var(--color-soft-foreground)] sm:text-[3.6rem] lg:text-[4.3rem]">
+              Two brothers building a CAS project between Brazil and the United
+              States.
             </h2>
 
             <div className="mt-6 space-y-5 text-[color:var(--color-muted)]">
               <p className="text-[1rem] leading-7 text-[color:var(--color-foreground)] sm:text-[1.08rem] sm:leading-8">
-                We are two high school students from Windermere Preparatory
-                School, and KeepYourHistory is part of the IB CAS project we
-                are developing to help preserve people&apos;s stories.
+                We are students at Windermere Preparatory School, and Keep Your
+                History is part of the IB CAS project we developed together.
+                The project reflects both creativity and service, combining
+                design work with real community support.
               </p>
               <p className="text-[0.98rem] leading-7 sm:text-[1.04rem] sm:leading-8">
-                The idea came from our own families. One of our grandparents
-                was a veteran, and another was a priest who passed away. Their
-                lives had meaning, service, and experiences worth remembering,
-                but we realized how easily those histories can disappear with
-                time.
+                Our work was shaped by family ties to Brazil and by the church
+                community we knew there. Because we were coordinating much of
+                the project remotely, we also learned how much trust,
+                communication, and collaboration are required to create
+                something meaningful at a distance.
               </p>
               <p className="text-[0.98rem] leading-7 sm:text-[1.04rem] sm:leading-8">
-                We started this project because we do not want those stories to
-                end with memory alone. We want to help institutions and
-                families keep those histories available in a way that can be
-                read, shared, and passed on.
-              </p>
-              <p className="text-[0.98rem] leading-7 sm:text-[1.04rem] sm:leading-8">
-                For us, this is not only a school project. It is a way to honor
-                our grandparents and to make sure many other people are
-                remembered with the same care.
+                For us, this project is about more than preserving stories. It
+                is about listening carefully, adapting when plans change, and
+                creating something that helps people feel remembered, connected,
+                and supported.
               </p>
             </div>
           </div>
@@ -497,42 +736,67 @@ export default function Home() {
       </section>
 
       <section
-        id="order"
+        id="contact"
         data-animate
         className="reveal reveal-up relative scroll-mt-28 mx-auto w-full max-w-7xl px-4 pb-22 sm:px-8 sm:pb-26 lg:px-12 lg:pb-30"
       >
-        <div id="for-places" className="pointer-events-none absolute -top-28" />
-        <div id="contact" className="pointer-events-none absolute -top-28" />
         <div className="pointer-events-none absolute left-1/2 top-[18%] z-[1] h-40 w-[min(44rem,88vw)] -translate-x-1/2 rounded-full bg-[radial-gradient(circle,rgba(247,251,253,0.88),rgba(247,251,253,0.22)_62%,transparent)] blur-3xl" />
 
-        <div
-          data-animate
-          className="reveal reveal-up relative z-10 mx-auto max-w-3xl"
-        >
-          <h2 className="text-center font-display text-[2.1rem] leading-[0.98] tracking-[0.01em] text-[color:var(--color-soft-foreground)] sm:text-[2.65rem]">
-            Request a Book
-          </h2>
-          <p className="mx-auto mt-3 max-w-2xl text-center text-[0.96rem] leading-7 text-[color:var(--color-muted)] sm:text-[1rem]">
-            Share your organization details and we&apos;ll follow up to plan
-            your project.
-          </p>
+        <div className="relative z-10 grid gap-8 lg:grid-cols-[minmax(0,0.72fr)_minmax(0,1fr)] lg:gap-10">
+          <div data-animate className="reveal reveal-left">
+            <p className="text-[0.75rem] font-semibold uppercase tracking-[0.18em] text-[color:var(--color-accent)]">
+              Contact
+            </p>
+            <h2 className="mt-4 font-display text-[2.2rem] leading-[0.98] tracking-[0.01em] text-[color:var(--color-soft-foreground)] sm:text-[2.8rem]">
+              Bring Keep Your History to another community.
+            </h2>
+            <p className="mt-4 max-w-[30rem] text-[0.98rem] leading-7 text-[color:var(--color-muted)] sm:text-[1rem]">
+              If your school, church, organization, or community group wants to
+              learn more, collaborate, or adapt this idea for another place,
+              send us a message.
+            </p>
 
-          <form
+            <div className="mt-6 grid gap-3">
+              <div className="rounded-[1.2rem] border border-[rgba(84,112,130,0.16)] bg-[rgba(248,251,253,0.82)] p-4">
+                <p className="text-[0.72rem] font-semibold uppercase tracking-[0.15em] text-[color:var(--color-accent)]">
+                  Schools and CAS programs
+                </p>
+                <p className="mt-2 text-[0.94rem] leading-6 text-[color:var(--color-foreground)]">
+                  We can share how the project was planned, adapted, and carried
+                  out across different stages.
+                </p>
+              </div>
+              <div className="rounded-[1.2rem] border border-[rgba(84,112,130,0.16)] bg-[rgba(248,251,253,0.82)] p-4">
+                <p className="text-[0.72rem] font-semibold uppercase tracking-[0.15em] text-[color:var(--color-accent)]">
+                  Churches and community groups
+                </p>
+                <p className="mt-2 text-[0.94rem] leading-6 text-[color:var(--color-foreground)]">
+                  The format can support storytelling, outreach, memory
+                  preservation, and service initiatives.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div
             data-animate
             data-animate-delay="120"
-            onSubmit={handleRequestSubmit}
-            onChange={handleRequestChange}
-            className="reveal reveal-up request-form-panel mt-6 grid gap-4 rounded-[0.86rem] border border-[rgba(88,116,134,0.24)] bg-[rgba(249,252,254,0.9)] p-5 sm:p-6"
+            className="reveal reveal-up"
           >
+            <form
+              onSubmit={handleRequestSubmit}
+              onChange={handleRequestChange}
+              className="request-form-panel grid gap-4 rounded-[1.1rem] border border-[rgba(88,116,134,0.24)] bg-[rgba(249,252,254,0.9)] p-5 sm:p-6"
+            >
               <label className="request-field">
-                <span className="request-label">Organization Name</span>
+                <span className="request-label">Organization</span>
                 <input
                   type="text"
                   name="organizationName"
                   required
                   autoComplete="organization"
                   className="request-control"
-                  placeholder="Windermere Care Center"
+                  placeholder="School, parish, or community organization"
                 />
               </label>
 
@@ -550,14 +814,14 @@ export default function Home() {
                 </label>
 
                 <label className="request-field">
-                  <span className="request-label">Work Email</span>
+                  <span className="request-label">Email</span>
                   <input
                     type="email"
                     name="email"
                     required
                     autoComplete="email"
                     className="request-control"
-                    placeholder="name@organization.org"
+                    placeholder="name@example.org"
                   />
                 </label>
               </div>
@@ -578,43 +842,44 @@ export default function Home() {
                 <textarea
                   name="message"
                   required
-                  rows={4}
-                  className="request-control min-h-[7rem] resize-y py-2.5"
-                  placeholder="Tell us about your institution and what you need."
+                  rows={5}
+                  className="request-control min-h-[8rem] resize-y py-2.5"
+                  placeholder="Tell us about your community, your interest in the project, or how you would like to collaborate."
                 />
               </label>
 
               <div className="flex flex-col gap-3 border-t border-[rgba(88,116,134,0.2)] pt-3 sm:flex-row sm:items-center sm:justify-between">
                 <p className="text-[0.82rem] text-[color:var(--color-muted)]">
-                  We use this only to contact your organization.
+                  We use this only to reply to your message.
                 </p>
                 <button
                   type="submit"
                   disabled={isRequestSubmitting}
                   className="inline-flex h-11 items-center justify-center rounded-full border border-[rgba(74,102,121,0.24)] bg-[rgba(214,228,236,0.96)] px-6 text-[0.74rem] font-semibold uppercase tracking-[0.15em] text-[color:var(--color-foreground)] transition-all duration-200 hover:-translate-y-0.5 hover:bg-[rgba(214,228,236,1)] disabled:cursor-not-allowed disabled:opacity-70"
                 >
-                  {isRequestSubmitting ? "Sending..." : "Send Request"}
+                  {isRequestSubmitting ? "Sending..." : "Send Message"}
                 </button>
               </div>
 
-            {requestError ? (
-              <p
-                aria-live="polite"
-                className="rounded-md border border-[rgba(148,90,96,0.28)] bg-[rgba(243,229,232,0.72)] px-3 py-2 text-[0.88rem] text-[color:var(--color-foreground)]"
-              >
-                {requestError}
-              </p>
-            ) : null}
+              {requestError ? (
+                <p
+                  aria-live="polite"
+                  className="rounded-md border border-[rgba(148,90,96,0.28)] bg-[rgba(243,229,232,0.72)] px-3 py-2 text-[0.88rem] text-[color:var(--color-foreground)]"
+                >
+                  {requestError}
+                </p>
+              ) : null}
 
-            {requestSubmitted ? (
-              <p
-                aria-live="polite"
-                className="rounded-md border border-[rgba(74,102,121,0.24)] bg-[rgba(222,235,243,0.56)] px-3 py-2 text-[0.88rem] text-[color:var(--color-foreground)]"
-              >
-                Thanks. We received your request and will contact you shortly.
-              </p>
-            ) : null}
-          </form>
+              {requestSubmitted ? (
+                <p
+                  aria-live="polite"
+                  className="rounded-md border border-[rgba(74,102,121,0.24)] bg-[rgba(222,235,243,0.56)] px-3 py-2 text-[0.88rem] text-[color:var(--color-foreground)]"
+                >
+                  Thanks. We received your message and will contact you shortly.
+                </p>
+              ) : null}
+            </form>
+          </div>
         </div>
       </section>
 
@@ -626,11 +891,12 @@ export default function Home() {
           <div className="grid gap-8 md:grid-cols-[minmax(0,1fr)_minmax(15rem,20rem)] md:gap-10">
             <div>
               <p className="font-display text-[1.85rem] leading-[0.95] tracking-[0.01em] text-[color:var(--color-soft-foreground)] sm:text-[2.15rem]">
-                KeepYourHistory
+                Keep Your History
               </p>
-              <p className="mt-3 max-w-[22rem] text-[0.92rem] leading-7 text-[color:var(--color-muted)]">
-                Preserving personal histories through printed books for care
-                institutions and future generations.
+              <p className="mt-3 max-w-[24rem] text-[0.92rem] leading-7 text-[color:var(--color-muted)]">
+                Preserving life lessons, memories, and community support
+                through storytelling, bilingual cards, memory boxes, and
+                service.
               </p>
             </div>
 
@@ -640,26 +906,22 @@ export default function Home() {
               </p>
               <div className="mt-4 grid gap-2 text-[0.93rem] text-[color:var(--color-muted)] md:text-right">
                 <a
-                  href="#order"
+                  href="#project"
                   className="transition-colors duration-200 hover:text-[color:var(--color-soft-foreground)]"
                 >
-                  Order a Book
+                  Project Overview
                 </a>
                 <a
-                  href="https://github.com/luciano655dev"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href="#journey"
                   className="transition-colors duration-200 hover:text-[color:var(--color-soft-foreground)]"
                 >
-                  GitHub
+                  Project Journey
                 </a>
                 <a
-                  href="https://instagram.com/luciano655dev"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href="#contact"
                   className="transition-colors duration-200 hover:text-[color:var(--color-soft-foreground)]"
                 >
-                  Instagram
+                  Contact
                 </a>
                 <a
                   href="https://www.windermereprep.com/"
@@ -682,7 +944,7 @@ export default function Home() {
           </div>
 
           <div className="mt-8 border-t border-[color:var(--color-border)] pt-5 text-[0.8rem] text-[color:var(--color-muted)]">
-            © {new Date().getFullYear()} KeepYourHistory. All rights reserved.
+            © {new Date().getFullYear()} Keep Your History. All rights reserved.
           </div>
         </div>
       </footer>

@@ -98,11 +98,11 @@ export async function POST(request: Request) {
     },
   });
 
-  const subject = `New KeepYourHistory Request - ${organizationName}`;
+  const subject = `New KeepYourHistory Contact - ${organizationName}`;
   const from = process.env.SMTP_FROM ?? `KeepYourHistory <${smtpUser}>`;
 
   const text = [
-    "New request submitted from KeepYourHistory website.",
+    "New contact submitted from KeepYourHistory website.",
     "",
     `Organization: ${organizationName}`,
     `Contact Name: ${contactName}`,
@@ -114,7 +114,7 @@ export async function POST(request: Request) {
   ].join("\n");
 
   const html = `
-    <h2>New KeepYourHistory Request</h2>
+    <h2>New KeepYourHistory Contact</h2>
     <p><strong>Organization:</strong> ${escapeHtml(organizationName)}</p>
     <p><strong>Contact Name:</strong> ${escapeHtml(contactName)}</p>
     <p><strong>Email:</strong> ${escapeHtml(email)}</p>
@@ -133,7 +133,7 @@ export async function POST(request: Request) {
       html,
     });
   } catch (error) {
-    console.error("request-book sendMail error:", error);
+    console.error("keepyourhistory contact sendMail error:", error);
     return Response.json(
       { error: getSmtpErrorMessage(error) },
       { status: 500 },

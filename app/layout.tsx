@@ -18,7 +18,7 @@ const displayFont = Fraunces({
 export const metadata: Metadata = {
   title: "Keep Your History",
   description:
-    "Personalized memory books that preserve the stories, faces, and history of the people who built each place.",
+    "A CAS project preserving life lessons, memories, and community support through interviews, bilingual cards, memory boxes, and donations.",
   icons: {
     icon: "/Logo.png",
     shortcut: "/Logo.png",
